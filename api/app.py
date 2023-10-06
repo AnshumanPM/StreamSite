@@ -18,23 +18,6 @@ def is_valid_url(url):
     return validators.url(url)
 
 
-@app.route("/stream", methods=["GET", "POST"])
-def stream():
-    if request.method == "POST":
-        video_url = request.form["url"]
-        if video_url != "" and is_valid_url(video_url):
-            return render_template("stream.html", video_url=video_url)
-        else:
-            return render_template(
-                "homepage.html", input_value=video_url, invalid_link=True
-            )
-    else:
-        video_url = request.args.get("url")
-        if video_url != "":
-            return render_template("stream.html", video_url=video_url)
-        return "Invalid URL!"
-
-
 @app.route("/tg/stream")
 def tg_stream():
     video_url = request.args.get("url")
@@ -59,6 +42,14 @@ def tg_stream():
     return "Invalid URL!"
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home_page():
+    if request.method == "POST":
+        video_url = request.form["url"]
+        if is_valid_url(video_url):
+            return render_template("stream.html", video_url=video_url)
+        else:
+            return render_template(
+                "homepage.html", input_value=video_url, invalid_link=True
+            )
     return render_template("homepage.html")
