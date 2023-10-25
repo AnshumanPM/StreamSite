@@ -34,32 +34,61 @@
             const player = new Plyr('#player');
           </script>
         </center>
-      <br />
-      <br />
-      <div>
-        <center>
-          <a href="{{ video_url }}" style="margin-top: 5px;" class="btn btn-primary btn-block">
-            <span class="material-symbols-rounded symbol">cloud_download</span> Download </a>
-          <div class="btn-group">
-            <button style="margin-top: 5px;" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="material-symbols-rounded symbol">smart_display</span> Stream </button>
-            <div style="width: 250px;" class="dropdown-menu">
-              <a class="dropdown-item" href="intent:{{ video_url }}#Intent;package=com.mxtech.videoplayer.ad;end">MX Player</a>
-              <a class="dropdown-item" href="vlc://{{ video_url }}">VLC Mobile</a>
-              <a class="dropdown-item" href="playit://playerv2/video?url={{ video_url }}&amp;">PlayIt</a>
+        <br />
+        <br />
+        <div>
+          <center>
+            <button id="dlButton" class="btn btn-primary btn-block">
+              <span class="material-symbols-rounded symbol">cloud_download</span> Download </button>
+            <div class="btn-group">
+              <button id="dropbtn" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                <span class="material-symbols-rounded symbol">smart_display</span> Stream </button>
+              <div id="dropmenu" class="dropdown-menu">
+                <button id="mxButton" class="dropdown-item">MX Player</button>
+                <button id="vlcButton" class="dropdown-item">VLC Mobile</button>
+                <button id="playitButton" class="dropdown-item">PlayIt</button>
+                <button id="splayButton" class="dropdown-item">SPlayer</button>
+                <button id="kmplayButton" class="dropdown-item">KMPlayer</button>
+                <button id="hdplayButton" class="dropdown-item">HDPlayer</button>
+              </div>
             </div>
-          </div>
-        </center>
+          </center>
+        </div>
       </div>
-    </div>
     </main>
     <center>
-      <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fstream.anshumanpm.eu.org&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+      <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fstream.anshumanpm.eu.org&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" />
+      </a>
     </center>
     <footer class="footer">
-        <div class="text-muted">Made with ❤️ by <b>
-            <a href="https://telegram.me/AnshumanPM_2006">𝑨𝒏𝒔𝒉𝒖𝒎𝒂𝒏𝑷𝑴 〄</a>
-          </b>
-        </div>
+      <div class="text-muted">Made with ❤️ by <b>
+          <a href="https://telegram.me/AnshumanPM_2006">𝑨𝒏𝒔𝒉𝒖𝒎𝒂𝒏𝑷𝑴 〄</a>
+        </b>
+      </div>
     </footer>
+    <script type="text/javascript">
+      document.getElementById("dlButton").onclick = function() {
+        location.href = "{{ video_url }}";
+      };
+      document.getElementById("mxButton").onclick = function() {
+        location.href = "intent:{{ video_url }}#Intent;package=com.mxtech.videoplayer.ad;end";
+      };
+      document.getElementById("vlcButton").onclick = function() {
+        location.href = "vlc://{{ video_url }}";
+      };
+      document.getElementById("playitButton").onclick = function() {
+        location.href = "playit://playerv2/video?url={{ video_url }}&amp;";
+      };
+      document.getElementById("splayButton").onclick = function() {
+        location.href = "intent:{{ video_url }}#Intent;action=com.young.simple.player.playback_online;package=com.young.simple.player;end";
+      };
+      document.getElementById("kmplayButton").onclick = function() {
+        location.href = "intent:{{ video_url }}#Intent;package=com.kmplayer;end";
+      };
+      document.getElementById("hdplayButton").onclick = function() {
+        location.href = "intent:{{ video_url }}#Intent;package=uplayer.video.player;end";
+      };
+    </script>
   </body>
 </html>
