@@ -25,13 +25,16 @@
     <main>
       <div class="container">
         <center>
-          <video id="player" playsinline controls data-poster="https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg">
+          <video id="player" data-poster="https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg">
             <source src="{{ video_url }}" type="video/mp4">
             <source src="{{ video_url }}" type="video/webm">
           </video>
           <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
           <script>
-            const player = new Plyr('#player');
+            const player = new Plyr('#player', {
+              controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'captions', 'settings', 'pip', 'fullscreen'],
+              ratio: '16:9',
+            });
           </script>
         </center>
         <br />
