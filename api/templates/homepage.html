@@ -18,14 +18,13 @@
   <body>
     <header>
       <a href="/">
-        <img src="https://cdn.anshumanpm.eu.org/logo.png" alt="logo" width="150px">
+        <img id="navlogo" src="https://cdn.anshumanpm.eu.org/logo.png" alt="logo">
       </a>
+      <img id="icon" src="https://cdn.anshumanpm.eu.org/StreamSite/sun.png" alt="themeToggle">
     </header>
     <main>
       <div class="container">
-        <center>
-          {% if invalid_link %} <div class="alert alert-danger" role="alert"> Invalid Video Link </div> {% endif %}
-          <h4 class="mt-4">Play Videos via Links</h4>
+        <center> {% if invalid_link %} <div class="alert alert-danger" role="alert"> Invalid Video Link </div> {% endif %} <h4 class="mt-4">Play Videos via Links</h4>
           <form method="post" action="/">
             <div class="form-group">
               <input type="text" class="form-control" name="url" placeholder="Enter video link" value="{{ input_value }}" required>
@@ -39,13 +38,26 @@
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </main>
     <center>
-      <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fstream.anshumanpm.eu.org&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
+      <a href="https://hits.seeyoufarm.com">
+        <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fstream.anshumanpm.eu.org&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" />
+      </a>
     </center>
     <footer class="footer">
-        <div class="text-muted">Made with ❤️ by <b>
-            <a href="https://telegram.me/AnshumanPM_2006">𝑨𝒏𝒔𝒉𝒖𝒎𝒂𝒏𝑷𝑴 〄</a>
-          </b>
-        </div>
+      <div class="text-muted">Made with ❤️ by <b>
+          <a href="https://telegram.me/AnshumanPM_2006">𝑨𝒏𝒔𝒉𝒖𝒎𝒂𝒏𝑷𝑴 〄</a>
+        </b>
+      </div>
     </footer>
+    <script type="text/javascript">
+      var icon = document.getElementById("icon");
+      icon.onclick = function() {
+        document.body.classList.toggle("white-theme");
+        if (document.body.classList.contains("white-theme")) {
+          icon.src = "https://cdn.anshumanpm.eu.org/StreamSite/moon.png";
+        } else {
+          icon.src = "https://cdn.anshumanpm.eu.org/StreamSite/sun.png";
+        }
+      }
+    </script>
   </body>
 </html>

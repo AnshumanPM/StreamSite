@@ -19,8 +19,9 @@
   <body>
     <header>
       <a href="/">
-        <img src="https://cdn.anshumanpm.eu.org/logo.png" alt="logo" width="150px">
+        <img id="navlogo" src="https://cdn.anshumanpm.eu.org/logo.png" alt="logo">
       </a>
+      <img id="icon" src="https://cdn.anshumanpm.eu.org/StreamSite/sun.png" alt="themeToggle">
     </header>
     <main>
       <div class="container">
@@ -71,6 +72,15 @@
       </div>
     </footer>
     <script type="text/javascript">
+      var icon = document.getElementById("icon");
+      icon.onclick = function() {
+        document.body.classList.toggle("white-theme");
+        if (document.body.classList.contains("white-theme")) {
+          icon.src = "https://cdn.anshumanpm.eu.org/StreamSite/moon.png";
+        } else {
+          icon.src = "https://cdn.anshumanpm.eu.org/StreamSite/sun.png";
+        }
+      }
       document.getElementById("dlButton").onclick = function() {
         location.href = "{{ video_url }}";
       };
