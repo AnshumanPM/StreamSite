@@ -21,7 +21,7 @@
       <a href="/">
         <img id="navlogo" src="https://cdn.anshumanpm.eu.org/logo.png" alt="logo">
       </a>
-      <img id="icon" src="https://cdn.anshumanpm.eu.org/StreamSite/sun.png" alt="themeToggle">
+      <img id="icon" src="https://cdn.anshumanpm.eu.org/theme/light_mode.svg" alt="themeToggle">
     </header>
     <main>
       <div class="container">
@@ -73,12 +73,25 @@
     </footer>
     <script type="text/javascript">
       var icon = document.getElementById("icon");
+      if (localStorage.getItem("theme") == null) {
+        localStorage.setItem("theme", "dark");
+      }
+      let localData = localStorage.getItem("theme");
+      if (localData == "dark") {
+        icon.src = "https://cdn.anshumanpm.eu.org/theme/light_mode.svg";
+        document.body.classList.remove("white-theme");
+      } else if (localData == "light") {
+        icon.src = "https://cdn.anshumanpm.eu.org/theme/dark_mode.svg";
+        document.body.classList.add("white-theme");
+      }
       icon.onclick = function() {
         document.body.classList.toggle("white-theme");
         if (document.body.classList.contains("white-theme")) {
-          icon.src = "https://cdn.anshumanpm.eu.org/StreamSite/moon.png";
+          icon.src = "https://cdn.anshumanpm.eu.org/theme/dark_mode.svg";
+          localStorage.setItem("theme", "light");
         } else {
-          icon.src = "https://cdn.anshumanpm.eu.org/StreamSite/sun.png";
+          icon.src = "https://cdn.anshumanpm.eu.org/theme/light_mode.svg";
+          localStorage.setItem("theme", "dark");
         }
       }
       document.getElementById("dlButton").onclick = function() {
