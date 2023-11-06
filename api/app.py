@@ -1,5 +1,7 @@
 import json
 import os
+import re
+import urllib.parse
 from urllib.parse import unquote_plus
 
 import requests
@@ -31,6 +33,18 @@ def is_valid_url(url):
 
 def auto_increment_id():
     return int(collection.count_documents({})) + 1
+
+
+def extract_gdrive_id(gdrive_link):
+    match = re.match(
+        r"^https://drive\.google\.com/file/d/([a-zA-Z0-9_-]+)/?.*$", gdrive_link
+    )
+    if match:
+        return match.group(1)
+    query_params = urllib.parse.parse_qs(urllib.parse.urlparse(gdrive_link).query)
+    if "id" in query_params:
+        return query_params["id"][0]
+    return None
 
 
 @app.route("/short/v2")
@@ -109,6 +123,9 @@ def home_page():
     if request.method == "POST":
         video_url = request.form["url"]
         if is_valid_url(video_url):
+            if extract_gdrive_id(video_url):
+                gdl_url = f"https://gdl.anshumanpm.eu.org/direct.aspx?id={extract_gdrive_id(video_url)}"
+                return render_template("stream.html", video_url=gdl_url)
             return render_template("stream.html", video_url=video_url)
         else:
             return render_template(
