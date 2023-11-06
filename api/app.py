@@ -36,7 +36,7 @@ def auto_increment_id():
 
 
 def extract_gdrive_id(gdrive_link):
-    if not "drive.google.com" in gdrive_link:
+    if "drive.google.com" not in gdrive_link:
         return None
     match = re.match(
         r"^https://drive\.google\.com/file/d/([a-zA-Z0-9_-]+)/?.*$", gdrive_link
