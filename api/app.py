@@ -21,6 +21,9 @@ client = MongoClient(db_url)
 db = client["mydb"]
 collection = db["links"]
 
+# Dl Urls
+OLD_DL_BASE_URL = os.environ.get("OLD_DL_BASE_URL")
+NEW_DL_BASE_URL = os.environ.get("NEW_DL_BASE_URL")
 
 def decode_string(encoded):
     decoded = "".join([chr(i) for i in hashids.decode(encoded)])
@@ -87,8 +90,9 @@ def tg(id):
 
 @app.route("/tg/stream")
 def tg_stream():
-    video_url = request.args.get("url")
+    old_video_url = request.args.get("url")
     metadata = request.args.get("meta")
+    video_url = old_video_url.replace(OLD_DL_BASE_URL, NEW_DL_BASE_URL)
     if video_url != "" and metadata != "":
         try:
             data = decode_string(unquote_plus(metadata)).split("|")
