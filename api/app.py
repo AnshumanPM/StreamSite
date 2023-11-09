@@ -25,6 +25,7 @@ collection = db["links"]
 OLD_DL_BASE_URL = os.environ.get("OLD_DL_BASE_URL")
 NEW_DL_BASE_URL = os.environ.get("NEW_DL_BASE_URL")
 
+
 def decode_string(encoded):
     decoded = "".join([chr(i) for i in hashids.decode(encoded)])
     return decoded
