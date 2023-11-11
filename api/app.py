@@ -53,37 +53,10 @@ def extract_gdrive_id(gdrive_link):
     return None
 
 
-@app.route("/short/v2")
-def short_api_v2():
-    url = request.args.get("url")
-    metadata = request.args.get("meta")
-    try:
-        org_url = f"{url}&meta={metadata}"
-        url_id = auto_increment_id()
-        collection.insert_one({"url_id": url_id, "long_url": org_url})
-        hashid = hashids.encode(url_id)
-        short_url = f"{request.host_url}tg/{hashid}"
-        response_data = {
-            "org_url": org_url,
-            "short_url": short_url,
-        }
-        json_data = json.dumps(response_data, indent=4)
-        return Response(json_data, content_type="application/json")
-    except BaseException:
-        response_data = {
-            "org_url": url,
-            "short_url": "https://www.anshumanpm.eu.org",
-        }
-        json_data = json.dumps(response_data, indent=4)
-        return Response(json_data, content_type="application/json")
-
-
 @app.route("/short/v3", methods=["POST"])
 def short_api_v3():
-    url = request.form["url"]
-    metadata = request.form["meta"]
     try:
-        org_url = f"{url}&meta={metadata}"
+        org_url = request.form["url"]
         url_id = auto_increment_id()
         collection.insert_one({"url_id": url_id, "long_url": org_url})
         hashid = hashids.encode(url_id)
