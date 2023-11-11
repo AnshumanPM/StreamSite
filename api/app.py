@@ -77,6 +77,7 @@ def short_api_v2():
         json_data = json.dumps(response_data, indent=4)
         return Response(json_data, content_type="application/json")
 
+
 @app.route("/short/v3", methods=["POST"])
 def short_api_v3():
     url = request.form["url"]
