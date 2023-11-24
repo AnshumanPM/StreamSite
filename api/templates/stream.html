@@ -26,7 +26,7 @@
     <main>
       <div class="container">
         <center>
-          <video id="player" class="video-js" poster="https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg">
+          <video id="player" class="video-js">
             <source src="{{ video_url }}" type="video/mp4">
             <source src="{{ video_url }}" type="video/webm">
           </video>
@@ -68,8 +68,9 @@
     <script>
       const player = videojs('#player', {
         controls: true,
-        aspectRatio: '16:9',
+        aspectRatio: "16:9",
         playbackRates: [0.5, 1, 1.25, 1.5, 1.75, 2],
+        poster: "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg",
       });
     </script>
     <script type="text/javascript">
