@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.anshumanpm.eu.org/Favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.anshumanpm.eu.org/Favicon/favicon-16x16.png">
     <link rel="manifest" href="https://cdn.anshumanpm.eu.org/Favicon/site.webmanifest">
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+    <link rel="stylesheet" href="https://vjs.zencdn.net/8.6.1/video-js.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4/dist/materia/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.anshumanpm.eu.org/StreamSite/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0">
@@ -26,7 +26,7 @@
     <main>
       <div class="container">
         <center>
-          <video id="player" data-poster="https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg">
+          <video id="player" class="video-js" poster="https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg">
             <source src="{{ video_url }}" type="video/mp4">
             <source src="{{ video_url }}" type="video/webm">
           </video>
@@ -64,11 +64,11 @@
         </b>
       </div>
     </footer>
-    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+    <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
     <script>
-      const player = new Plyr('#player', {
-        controls: ['play-large', 'play', 'progress', 'current-time', 'duration', 'mute', 'volume', 'settings', 'pip', 'fullscreen'],
-        ratio: '16:9',
+      const player = videojs('#player', {
+        controls: true,
+        aspectRatio: '16:9'
       });
     </script>
     <script type="text/javascript">
