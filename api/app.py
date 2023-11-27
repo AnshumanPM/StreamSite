@@ -6,8 +6,15 @@ from urllib.parse import unquote_plus
 
 import requests
 import validators
-from flask import Flask, Response, render_template, render_template_string, request
-from flask import Flask, make_response, redirect, render_template, request
+from flask import (
+    Flask,
+    Response,
+    make_response,
+    redirect,
+    render_template,
+    render_template_string,
+    request,
+)
 from hashids import Hashids
 from pymongo import MongoClient
 
@@ -84,9 +91,7 @@ def tg(id):
         original_url = collection.find_one({"url_id": url_id})["long_url"]
         html = requests.get(original_url).content.decode("utf-8")
         resp = make_response(
-            redirect(
-                "https://www.google.com/search?q=stream.anshumanpm.eu.org"
-            )
+            redirect("https://www.google.com/search?q=stream.anshumanpm.eu.org")
         )
         resp.set_cookie("tg_stream_cntn", html)
         return resp
@@ -149,7 +154,7 @@ def home_page():
         return resp
     return render_template("homepage.html")
 
+
 @app.errorhandler(Exception)
 def page_not_found(e):
     return render_template("error.html")
-    
