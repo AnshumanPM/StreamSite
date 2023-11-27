@@ -62,7 +62,9 @@ def tg(id):
         url_id = hashids.decode(id)[0]
         original_url = collection.find_one({"url_id": url_id})["long_url"]
         resp = make_response(
-            redirect("https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://stream.anshumanpm.eu.org/&ved=2ahUKEwigv621s-OCAxVPbmwGHatwDZEQFnoECAgQAQ&usg=AOvVaw0pvfDsFlA3a3xaP0LCRoCy")
+            redirect(
+                "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://stream.anshumanpm.eu.org/&ved=2ahUKEwigv621s-OCAxVPbmwGHatwDZEQFnoECAgQAQ&usg=AOvVaw0pvfDsFlA3a3xaP0LCRoCy"
+            )
         )
         resp.set_cookie("tgstream", original_url)
         return resp
