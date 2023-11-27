@@ -17,6 +17,7 @@ from flask import (
 )
 from hashids import Hashids
 from pymongo import MongoClient
+from helper import decode_string, is_valid_url, auto_increment_id, extract_gdrive_id
 
 app = Flask(__name__)
 
@@ -32,33 +33,6 @@ collection = db["links"]
 # Dl Urls
 OLD_DL_BASE_URL = os.environ.get("OLD_DL_BASE_URL")
 NEW_DL_BASE_URL = os.environ.get("NEW_DL_BASE_URL")
-
-
-def decode_string(encoded):
-    decoded = "".join([chr(i) for i in hashids.decode(encoded)])
-    return decoded
-
-
-def is_valid_url(url):
-    return validators.url(url)
-
-
-def auto_increment_id():
-    return int(collection.count_documents({})) + 1
-
-
-def extract_gdrive_id(gdrive_link):
-    if "drive.google.com" not in gdrive_link:
-        return None
-    match = re.match(
-        r"^https://drive\.google\.com/file/d/([a-zA-Z0-9_-]+)/?.*$", gdrive_link
-    )
-    if match:
-        return match.group(1)
-    query_params = urllib.parse.parse_qs(urllib.parse.urlparse(gdrive_link).query)
-    if "id" in query_params:
-        return query_params["id"][0]
-    return None
 
 
 @app.route("/short/v3", methods=["POST"])
