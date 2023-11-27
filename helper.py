@@ -1,13 +1,9 @@
-import json
 import os
 import re
 import urllib.parse
-from urllib.parse import unquote_plus
 
-import requests
 import validators
 from hashids import Hashids
-
 
 hash_salt = os.environ.get("HASH_SALT")
 hashids = Hashids(salt=hash_salt)
