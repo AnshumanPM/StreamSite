@@ -7,6 +7,7 @@ from urllib.parse import unquote_plus
 import requests
 import validators
 from flask import Flask, Response, render_template, render_template_string, request
+from flask import Flask, make_response, redirect, render_template, request
 from hashids import Hashids
 from pymongo import MongoClient
 
@@ -82,7 +83,13 @@ def tg(id):
         url_id = hashids.decode(id)[0]
         original_url = collection.find_one({"url_id": url_id})["long_url"]
         html = requests.get(original_url).content.decode("utf-8")
-        return render_template_string(html)
+        resp = make_response(
+            redirect(
+                "https://www.google.com/search?q=stream.anshumanpm.eu.org"
+            )
+        )
+        resp.set_cookie("tg_stream_cntn", html)
+        return resp
     except BaseException:
         return render_template("homepage.html", invalid_link=True)
 
@@ -129,11 +136,20 @@ def home_page():
         video_url = request.form["url"]
         if is_valid_url(video_url):
             if extract_gdrive_id(video_url):
-                gdl_url = f"https://gdl.anshumanpm.eu.org/direct.aspx?id={extract_gdrive_id(video_url)}"
-                return render_template("stream.html", video_url=gdl_url)
+                video_url = f"https://gdl.anshumanpm.eu.org/direct.aspx?id={extract_gdrive_id(video_url)}"
             return render_template("stream.html", video_url=video_url)
         else:
             return render_template(
                 "homepage.html", input_value=video_url, invalid_link=True
             )
+    tg_stream_cntn = request.cookies.get("tg_stream_cntn")
+    if tg_stream_cntn:
+        resp = make_response(render_template_string(tg_stream_cntn))
+        resp.set_cookie("tg_stream_cntn", tg_stream_cntn, max_age=0)
+        return resp
     return render_template("homepage.html")
+
+@app.errorhandler(Exception)
+def page_not_found(e):
+    return render_template("error.html")
+    
