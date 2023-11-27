@@ -15,6 +15,7 @@ client = MongoClient(db_url)
 db = client["mydb"]
 collection = db["links"]
 
+
 def decode_string(encoded):
     decoded = "".join([chr(i) for i in hashids.decode(encoded)])
     return decoded
