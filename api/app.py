@@ -61,11 +61,10 @@ def tg(id):
     try:
         url_id = hashids.decode(id)[0]
         original_url = collection.find_one({"url_id": url_id})["long_url"]
-        html = requests.get(original_url).content.decode("utf-8")
         resp = make_response(
             redirect("https://www.google.com/search?q=stream.anshumanpm.eu.org")
         )
-        resp.set_cookie("tg_stream_cntn", html)
+        resp.set_cookie("tgstream", original_url)
         return resp
     except BaseException:
         return render_template("homepage.html", invalid_link=True)
@@ -119,10 +118,11 @@ def home_page():
             return render_template(
                 "homepage.html", input_value=video_url, invalid_link=True
             )
-    tg_stream_cntn = request.cookies.get("tg_stream_cntn")
-    if tg_stream_cntn:
-        resp = make_response(render_template_string(tg_stream_cntn))
-        resp.set_cookie("tg_stream_cntn", tg_stream_cntn, max_age=0)
+    tg_url = request.cookies.get("tgstream")
+    if tg_url:
+        html = requests.get(tg_url).content.decode("utf-8")
+        resp = make_response(render_template_string(html))
+        resp.set_cookie("tgstream", tg_url, max_age=0)
         return resp
     return render_template("homepage.html")
 
