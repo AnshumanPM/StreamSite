@@ -4,10 +4,16 @@ import urllib.parse
 
 import validators
 from hashids import Hashids
+from pymongo import MongoClient
 
 hash_salt = os.environ.get("HASH_SALT")
 hashids = Hashids(salt=hash_salt)
 
+# db setup
+db_url = os.environ.get("MONGO_URL")
+client = MongoClient(db_url)
+db = client["mydb"]
+collection = db["links"]
 
 def decode_string(encoded):
     decoded = "".join([chr(i) for i in hashids.decode(encoded)])
