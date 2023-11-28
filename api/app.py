@@ -86,7 +86,7 @@ def tg_stream():
             f_time = data[3]
             try:
                 tg_file_url = data[4]
-            except:
+            except BaseException:
                 tg_file_url = "https://telegram.me/AnshumanFileBot"
             return render_template(
                 "tg-stream.html",
