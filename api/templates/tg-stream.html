@@ -52,6 +52,8 @@
                 <button id="hdplayButton" class="dropdown-item">HDPlayer</button>
               </div>
             </div>
+            <button id="getFileButton" class="btn btn-primary btn-block">
+              <span class="material-symbols-rounded symbol">save</span> Get TG File </button>
           </center>
         </div>
         <br />
@@ -117,6 +119,9 @@
       }
       document.getElementById("dlButton").onclick = function() {
         location.href = "{{ video_url }}";
+      };
+      document.getElementById("getFileButton").onclick = function() {
+        location.href = "{{ tg_file_url }}";
       };
       document.getElementById("mxButton").onclick = function() {
         location.href = "intent:{{ video_url }}#Intent;package=com.mxtech.videoplayer.ad;end";
