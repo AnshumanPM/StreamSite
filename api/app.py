@@ -84,6 +84,10 @@ def tg_stream():
             f_size = data[1]
             f_owner = data[2]
             f_time = data[3]
+            try:
+                tg_file_url = data[4]
+            except:
+                tg_file_url = "https://telegram.me/AnshumanFileBot"
             return render_template(
                 "tg-stream.html",
                 video_url=video_url,
@@ -91,6 +95,7 @@ def tg_stream():
                 f_size=f_size,
                 f_owner=f_owner,
                 f_time=f_time,
+                tg_file_url=tg_file_url,
             )
         except BaseException:
             return "Invalid Input!"
