@@ -84,7 +84,7 @@ def tg_stream():
         except BaseException:
             return "Invalid Input!"
     return "Invalid URL!"
-    
+
 
 @app.route("/tg/<id>")
 def tg(id):
