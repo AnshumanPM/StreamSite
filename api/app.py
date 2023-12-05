@@ -3,15 +3,7 @@ import os
 from urllib.parse import unquote_plus
 
 import requests
-from flask import (
-    Flask,
-    Response,
-    make_response,
-    redirect,
-    render_template,
-    render_template_string,
-    request,
-)
+from flask import Flask, Response, render_template, render_template_string, request
 from hashids import Hashids
 from pymongo import MongoClient
 
