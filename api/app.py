@@ -56,22 +56,6 @@ def short_api_v3():
         return Response(json_data, content_type="application/json")
 
 
-@app.route("/tg/<id>")
-def tg(id):
-    try:
-        url_id = hashids.decode(id)[0]
-        original_url = collection.find_one({"url_id": url_id})["long_url"]
-        resp = make_response(
-            redirect(
-                "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://stream.anshumanpm.eu.org/&ved=2ahUKEwigv621s-OCAxVPbmwGHatwDZEQFnoECAgQAQ&usg=AOvVaw0pvfDsFlA3a3xaP0LCRoCy"
-            )
-        )
-        resp.set_cookie("tgstream", original_url)
-        return resp
-    except BaseException:
-        return render_template("homepage.html", invalid_link=True)
-
-
 @app.route("/tg/stream")
 def tg_stream():
     old_video_url = request.args.get("url")
@@ -100,6 +84,22 @@ def tg_stream():
         except BaseException:
             return "Invalid Input!"
     return "Invalid URL!"
+    
+
+@app.route("/tg/<id>")
+def tg(id):
+    try:
+        url_id = hashids.decode(id)[0]
+        original_url = collection.find_one({"url_id": url_id})["long_url"]
+        resp = make_response(
+            redirect(
+                "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://stream.anshumanpm.eu.org/&ved=2ahUKEwjA4rDYpfeCAxWMRmcHHd7pCWoQFnoECAwQAQ&usg=AOvVaw0pvfDsFlA3a3xaP0LCRoCy"
+            )
+        )
+        resp.set_cookie("tgstream", original_url)
+        return resp
+    except BaseException:
+        return render_template("homepage.html", invalid_link=True)
 
 
 @app.route("/stream")
