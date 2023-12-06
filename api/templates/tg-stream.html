@@ -39,33 +39,29 @@
         <div>
           <marquee>{{ f_name }}</marquee>
         </div>
-        <center>
-          <video id="player" class="video-js">
-            <source src="{{ video_url }}" type="video/mp4">
-            <source src="{{ video_url }}" type="video/webm">
-          </video>
-        </center>
+        <video id="player" class="video-js">
+          <source src="{{ video_url }}" type="video/mp4">
+          <source src="{{ video_url }}" type="video/webm">
+        </video>
         <br />
         <br />
-        <div>
-          <center>
-            <button id="dlButton" class="btn btn-primary btn-block">
-              <span class="material-symbols-rounded symbol">cloud_download</span> Download </button>
-            <div class="btn-group">
-              <button id="dropbtn" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                <span class="material-symbols-rounded symbol">smart_display</span> Stream </button>
-              <div id="dropmenu" class="dropdown-menu">
-                <button id="mxButton" class="dropdown-item">MX Player</button>
-                <button id="vlcButton" class="dropdown-item">VLC Mobile</button>
-                <button id="playitButton" class="dropdown-item">PlayIt</button>
-                <button id="splayButton" class="dropdown-item">SPlayer</button>
-                <button id="kmplayButton" class="dropdown-item">KMPlayer</button>
-                <button id="hdplayButton" class="dropdown-item">HDPlayer</button>
-              </div>
+        <div class="allBtn">
+          <button id="dlButton" class="btn btn-primary btn-block">
+            <span class="material-symbols-rounded symbol">cloud_download</span> Download </button>
+          <div class="btn-group">
+            <button id="dropbtn" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              <span class="material-symbols-rounded symbol">smart_display</span> Stream </button>
+            <div id="dropmenu" class="dropdown-menu">
+              <button id="mxButton" class="dropdown-item">MX Player</button>
+              <button id="vlcButton" class="dropdown-item">VLC Mobile</button>
+              <button id="playitButton" class="dropdown-item">PlayIt</button>
+              <button id="splayButton" class="dropdown-item">SPlayer</button>
+              <button id="kmplayButton" class="dropdown-item">KMPlayer</button>
+              <button id="hdplayButton" class="dropdown-item">HDPlayer</button>
             </div>
-            <button id="getFileButton" class="btn btn-primary btn-block">
-              <span class="material-symbols-rounded symbol">save</span> Get TG File </button>
-          </center>
+          </div>
+          <button id="getFileButton" class="btn btn-primary btn-block">
+            <span class="material-symbols-rounded symbol">save</span> Get TG File </button>
         </div>
         <br />
         <br />
