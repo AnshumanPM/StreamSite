@@ -93,7 +93,7 @@ def tg(id):
         original_url = collection.find_one({"url_id": url_id})["long_url"]
         resp = make_response(
             redirect(
-                "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://stream.anshumanpm.eu.org/&ved=2ahUKEwjA4rDYpfeCAxWMRmcHHd7pCWoQFnoECAwQAQ&usg=AOvVaw0pvfDsFlA3a3xaP0LCRoCy"
+                "https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://stream.anshumanpm.eu.org/&ved=2ahUKEwi3x7WCz4KDAxU3dmwGHce4A1UQFnoECA8QAQ&usg=AOvVaw0pvfDsFlA3a3xaP0LCRoCy"
             )
         )
         resp.set_cookie("tgstream", original_url)
