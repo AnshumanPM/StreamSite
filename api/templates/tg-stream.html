@@ -144,6 +144,18 @@
         location.href = "intent:{{ video_url }}#Intent;package=uplayer.video.player;end";
       };
     </script>
+    <!-- Force Pop Ads -->
+    <script>
+      var adclicked = false;
+      setTimeout(function() {
+        window.onclick = function() {
+          if (!adclicked) {
+            window.open("https://outrightsham.com/rsndi973b?key=ab618b622c098a302178f3fd81376b3b", "_blank");
+            adclicked = true;
+          }
+        };
+      }, 5000);
+    </script>
     <!-- Popunder Ads -->
     <script>
       (function(s, u, z, p) {
