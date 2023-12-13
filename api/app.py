@@ -15,7 +15,13 @@ from flask import (
 from hashids import Hashids
 from pymongo import MongoClient
 
-from helper import auto_increment_id, decode_string, extract_gdrive_id, is_valid_url, gen_rand_str
+from helper import (
+    auto_increment_id,
+    decode_string,
+    extract_gdrive_id,
+    gen_rand_str,
+    is_valid_url,
+)
 
 app = Flask(__name__)
 
