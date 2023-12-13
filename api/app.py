@@ -15,7 +15,7 @@ from flask import (
 from hashids import Hashids
 from pymongo import MongoClient
 
-from helper import auto_increment_id, decode_string, extract_gdrive_id, is_valid_url
+from helper import auto_increment_id, decode_string, extract_gdrive_id, is_valid_url, gen_rand_str
 
 app = Flask(__name__)
 
@@ -68,6 +68,7 @@ def tg_stream():
             f_size = data[1]
             f_owner = data[2]
             f_time = data[3]
+            ads_link = f"https://ads.anshumanpm.eu.org/{gen_rand_str()}"
             try:
                 tg_file_url = data[4]
             except BaseException:
@@ -80,6 +81,7 @@ def tg_stream():
                 f_owner=f_owner,
                 f_time=f_time,
                 tg_file_url=tg_file_url,
+                ads_link=ads_link,
             )
         except BaseException:
             return "Invalid Input!"
