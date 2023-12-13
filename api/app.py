@@ -15,13 +15,7 @@ from flask import (
 from hashids import Hashids
 from pymongo import MongoClient
 
-from helper import (
-    auto_increment_id,
-    decode_string,
-    extract_gdrive_id,
-    gen_rand_str,
-    is_valid_url,
-)
+from helper import auto_increment_id, decode_string, extract_gdrive_id, is_valid_url
 
 app = Flask(__name__)
 
@@ -74,7 +68,9 @@ def tg_stream():
             f_size = data[1]
             f_owner = data[2]
             f_time = data[3]
-            ads_link = "https://outrightsham.com/rrnx759f?key=d682ebbe96219cb8de23f4109a7b11c8"
+            ads_link = (
+                "https://outrightsham.com/rrnx759f?key=d682ebbe96219cb8de23f4109a7b11c8"
+            )
             try:
                 tg_file_url = data[4]
             except BaseException:
