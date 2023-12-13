@@ -1,7 +1,8 @@
 import os
 import re
 import urllib.parse
-
+import string
+import random
 import validators
 from hashids import Hashids
 from pymongo import MongoClient
@@ -24,6 +25,10 @@ def decode_string(encoded):
 def is_valid_url(url):
     return validators.url(url)
 
+def gen_rand_str():
+    r_str = str(''.join(random.choices(string.ascii_letters, k=8)))
+    return r_str
+    
 
 def auto_increment_id():
     return int(collection.count_documents({})) + 1
