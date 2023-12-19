@@ -53,7 +53,9 @@ def short_api_v3():
 def tg_stream():
     old_video_url = request.args.get("url")
     metadata = request.args.get("meta")
-    video_url = old_video_url.replace(OLD_DL_BASE_URL_1, NEW_DL_BASE_URL).replace(OLD_DL_BASE_URL_2, NEW_DL_BASE_URL)
+    video_url = old_video_url.replace(OLD_DL_BASE_URL_1, NEW_DL_BASE_URL).replace(
+        OLD_DL_BASE_URL_2, NEW_DL_BASE_URL
+    )
     if video_url != "" and metadata != "":
         try:
             data = decode_string(unquote_plus(metadata)).split("|")
