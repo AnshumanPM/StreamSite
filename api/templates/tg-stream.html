@@ -40,8 +40,8 @@
           <marquee>{{ f_name }}</marquee>
         </div>
         <video id="player" class="video-js">
-          <source src="{{ video_url }}" type="video/mp4">
-          <source src="{{ video_url }}" type="video/webm">
+          <source type="video/mp4">
+          <source type="video/webm">
         </video>
         <br />
         <br />
@@ -89,15 +89,7 @@
     </footer>
     <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
     <script>
-      const player = videojs('#player', {
-        controls: true,
-        aspectRatio: "16:9",
-        playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
-        poster: "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg",
-      });
-    </script>
-    <script type="text/javascript">
-      var icon = document.getElementById("icon");
+      let icon = document.getElementById("icon");
       if (localStorage.getItem("theme") == null) {
         localStorage.setItem("theme", "dark");
       }
@@ -119,34 +111,48 @@
           localStorage.setItem("theme", "dark");
         }
       }
+    </script>
+    <script>
+      let videoUrl = "{{ video_url }}";
+      let tgFileUrl = "{{ tg_file_url }}";
+      let videoElement = document.getElementById('player').getElementsByTagName('source');
+      for (let i = 0; i < videoElement.length; i++) {
+        videoElement[i].src = videoUrl;
+      }
+      const player = videojs('#player', {
+        controls: true,
+        aspectRatio: "16:9",
+        playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+        poster: "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg",
+      });
       document.getElementById("dlButton").onclick = function() {
-        location.href = "{{ video_url }}";
+        location.href = videoUrl;
       };
       document.getElementById("getFileButton").onclick = function() {
-        location.href = "{{ tg_file_url }}";
+        location.href = tgFileUrl;
       };
       document.getElementById("mxButton").onclick = function() {
-        location.href = "intent:{{ video_url }}#Intent;package=com.mxtech.videoplayer.ad;end";
+        location.href = `intent:${videoUrl}#Intent;package=com.mxtech.videoplayer.ad;end`;
       };
       document.getElementById("vlcButton").onclick = function() {
-        location.href = "vlc://{{ video_url }}";
+        location.href = `vlc://${videoUrl}`;
       };
       document.getElementById("playitButton").onclick = function() {
-        location.href = "playit://playerv2/video?url={{ video_url }}&amp;";
+        location.href = `playit://playerv2/video?url=${videoUrl}&amp;`;
       };
       document.getElementById("splayButton").onclick = function() {
-        location.href = "intent:{{ video_url }}#Intent;action=com.young.simple.player.playback_online;package=com.young.simple.player;end";
+        location.href = `intent:${videoUrl}#Intent;action=com.young.simple.player.playback_online;package=com.young.simple.player;end`;
       };
       document.getElementById("kmplayButton").onclick = function() {
-        location.href = "intent:{{ video_url }}#Intent;package=com.kmplayer;end";
+        location.href = `intent:${videoUrl}#Intent;package=com.kmplayer;end`;
       };
       document.getElementById("hdplayButton").onclick = function() {
-        location.href = "intent:{{ video_url }}#Intent;package=uplayer.video.player;end";
+        location.href = `intent:${videoUrl}#Intent;package=uplayer.video.player;end`;
       };
     </script>
     <!-- Force Pop Ads -->
     <script>
-      var adclicked = false;
+      let adclicked = false;
       setTimeout(function() {
         window.onclick = function() {
           if (!adclicked) {
