@@ -1,6 +1,6 @@
 import json
 import os
-from urllib.parse import unquote_plus
+from urllib.parse import quote_plus, unquote_plus
 
 import requests
 from flask import Flask, Response, render_template, render_template_string, request
@@ -10,7 +10,7 @@ from pymongo import MongoClient
 from helper import auto_increment_id, decode_string, extract_gdrive_id, is_valid_url
 
 app = Flask(__name__)
-app.jinja_env.filters["mx_vid_title"] = lambda u: u.replace(" ", "+")
+app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
 
 hash_salt = os.environ.get("HASH_SALT")
 hashids = Hashids(salt=hash_salt)
