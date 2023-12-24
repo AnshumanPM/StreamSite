@@ -132,7 +132,7 @@
         window.location.href = tgFileUrl;
       };
       document.getElementById("mxButton").onclick = function() {
-        window.location.href = `intent:${videoUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title=video.mkv;end`;
+        window.location.href = `intent:${videoUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title={{ f_name | quote_plus }};end`;
       };
       document.getElementById("vlcButton").onclick = function() {
         window.location.href = `vlc://${videoUrl}`;
