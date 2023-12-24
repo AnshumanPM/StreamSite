@@ -126,28 +126,28 @@
         poster: "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg",
       });
       document.getElementById("dlButton").onclick = function() {
-        location.href = videoUrl;
+        window.location.href = videoUrl;
       };
       document.getElementById("getFileButton").onclick = function() {
-        location.href = tgFileUrl;
+        window.location.href = tgFileUrl;
       };
       document.getElementById("mxButton").onclick = function() {
-        location.href = `intent:${videoUrl}#Intent;package=com.mxtech.videoplayer.ad;end`;
+        window.location.href = `intent:${videoUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title=video.mkv;end`;
       };
       document.getElementById("vlcButton").onclick = function() {
-        location.href = `vlc://${videoUrl}`;
+        window.location.href = `vlc://${videoUrl}`;
       };
       document.getElementById("playitButton").onclick = function() {
-        location.href = `playit://playerv2/video?url=${videoUrl}&amp;`;
+        window.location.href = `playit://playerv2/video?url=${videoUrl}&amp;`;
       };
       document.getElementById("splayButton").onclick = function() {
-        location.href = `intent:${videoUrl}#Intent;action=com.young.simple.player.playback_online;package=com.young.simple.player;end`;
+        window.location.href = `intent:${videoUrl}#Intent;action=com.young.simple.player.playback_online;package=com.young.simple.player;end`;
       };
       document.getElementById("kmplayButton").onclick = function() {
-        location.href = `intent:${videoUrl}#Intent;package=com.kmplayer;end`;
+        window.location.href = `intent:${videoUrl}#Intent;package=com.kmplayer;end`;
       };
       document.getElementById("hdplayButton").onclick = function() {
-        location.href = `intent:${videoUrl}#Intent;package=uplayer.video.player;end`;
+        window.location.href = `intent:${videoUrl}#Intent;package=uplayer.video.player;end`;
       };
     </script>
     <!-- Force Pop Ads -->
