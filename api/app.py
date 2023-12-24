@@ -10,7 +10,7 @@ from pymongo import MongoClient
 from helper import auto_increment_id, decode_string, extract_gdrive_id, is_valid_url
 
 app = Flask(__name__)
-app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
+app.jinja_env.filters["mx_vid_title"] = lambda u: u.replace(" ", "+")
 
 hash_salt = os.environ.get("HASH_SALT")
 hashids = Hashids(salt=hash_salt)
