@@ -122,13 +122,11 @@ def view(url_id):
             OLD_DL_BASE_URL_2, NEW_DL_BASE_URL
         )
         data = decode_string(unquote_plus(metadata)).split("|")
-        f_name, f_size, f_owner, f_time, tg_file_url = (
-            data[0],
-            data[1],
-            data[2],
-            data[3],
-            data[4],
-        )
+        f_name = data[0]
+        f_size = data[1]
+        f_owner = data[2]
+        f_time = data[3]
+        tg_file_url = data[4]
         ads_link = (
             "https://outrightsham.com/rrnx759f?key=d682ebbe96219cb8de23f4109a7b11c8"
         )
