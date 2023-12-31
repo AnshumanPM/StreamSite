@@ -20,6 +20,7 @@ db_url = os.environ.get("MONGO_URL")
 client = MongoClient(db_url)
 db = client["mydb"]
 collection = db["links"]
+new_collection = db["new_links"]
 
 # Dl Urls
 OLD_DL_BASE_URL_1 = os.environ.get("OLD_DL_BASE_URL_1")
@@ -45,6 +46,31 @@ def short_api_v3():
         response_data = {
             "org_url": url,
             "short_url": "https://www.anshumanpm.eu.org",
+        }
+        json_data = json.dumps(response_data, indent=4)
+        return Response(json_data, content_type="application/json")
+
+
+@app.route("/short/v4", methods=["POST"])
+def short_api_v4():
+    try:
+        url_id = request.form["url_id"]
+        dl_url = request.form["dl_url"]
+        metadata = request.form["metadata"]
+        new_collection.insert_one(
+            {"url_id": url_id, "dl_url": dl_url, "metadata": metadata}
+        )
+        short_url = f"{request.host_url}view/{url_id}"
+        response_data = {
+            "url_id": url_id,
+            "short_url": short_url,
+        }
+        json_data = json.dumps(response_data, indent=4)
+        return Response(json_data, content_type="application/json")
+    except BaseException:
+        response_data = {
+            "url_id": 0,
+            "short_url": request.host_url,
         }
         json_data = json.dumps(response_data, indent=4)
         return Response(json_data, content_type="application/json")
@@ -84,6 +110,38 @@ def tg_stream():
         except BaseException:
             return "Invalid Input!"
     return "Invalid URL!"
+
+
+@app.route("/view/<url_id>")
+def view(url_id):
+    try:
+        obj = collection.find_one({"url_id": url_id})
+        old_video_url = obj["dl_url"]
+        metadata = obj["metadata"]
+        video_url = old_video_url.replace(OLD_DL_BASE_URL_1, NEW_DL_BASE_URL).replace(
+            OLD_DL_BASE_URL_2, NEW_DL_BASE_URL
+        )
+        data = decode_string(unquote_plus(metadata)).split("|")
+        f_name = data[0]
+        f_size = data[1]
+        f_owner = data[2]
+        f_time = data[3]
+        tg_file_url = data[4]
+        ads_link = (
+            "https://outrightsham.com/rrnx759f?key=d682ebbe96219cb8de23f4109a7b11c8"
+        )
+        return render_template(
+            "tg-stream.html",
+            video_url=video_url,
+            f_name=f_name,
+            f_size=f_size,
+            f_owner=f_owner,
+            f_time=f_time,
+            tg_file_url=tg_file_url,
+            ads_link=ads_link,
+        )
+    except BaseException:
+        return render_template("homepage.html", invalid_link=True)
 
 
 @app.route("/tg/<id>")
