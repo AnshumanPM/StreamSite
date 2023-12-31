@@ -57,7 +57,9 @@ def short_api_v4():
         url_id = request.form["url_id"]
         dl_url = request.form["dl_url"]
         metadata = request.form["metadata"]
-        new_collection.insert_one({"url_id": url_id, "dl_url": dl_url, "metadata": metadata})
+        new_collection.insert_one(
+            {"url_id": url_id, "dl_url": dl_url, "metadata": metadata}
+        )
         short_url = f"{request.host_url}view/{url_id}"
         response_data = {
             "url_id": url_id,
@@ -120,7 +122,13 @@ def view(url_id):
             OLD_DL_BASE_URL_2, NEW_DL_BASE_URL
         )
         data = decode_string(unquote_plus(metadata)).split("|")
-        f_name,f_size,f_owner,f_time,tg_file_url = data[0],data[1],data[2],data[3],data[4]
+        f_name, f_size, f_owner, f_time, tg_file_url = (
+            data[0],
+            data[1],
+            data[2],
+            data[3],
+            data[4],
+        )
         ads_link = (
             "https://outrightsham.com/rrnx759f?key=d682ebbe96219cb8de23f4109a7b11c8"
         )
