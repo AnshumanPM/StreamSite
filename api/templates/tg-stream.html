@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>{{ f_name }} - Anshuman Prasad Mahanta</title>
+    <title>Watch {{ f_name }}</title>
     <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.anshumanpm.eu.org/Favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.anshumanpm.eu.org/Favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.anshumanpm.eu.org/Favicon/favicon-16x16.png">
@@ -149,18 +149,6 @@
       document.getElementById("hdplayButton").onclick = function() {
         window.location.href = `intent:${videoUrl}#Intent;package=uplayer.video.player;end`;
       };
-    </script>
-    <!-- Force Pop Ads -->
-    <script>
-      let adclicked = false;
-      setTimeout(function() {
-        window.onclick = function() {
-          if (!adclicked) {
-            window.open("{{  ads_link  }}");
-            adclicked = true;
-          }
-        };
-      }, 5000);
     </script>
     <!-- Popunder Ads -->
     <script>
