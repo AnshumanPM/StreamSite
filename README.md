@@ -1,12 +1,10 @@
 # Flask Video Streaming App
 
-This is a Flask web application for streaming video URLs. The app utilizes MongoDB for data storage and hashids for URL shortening. Below is a brief overview of the main components:
+This is a Flask web application for streaming video URLs. The app utilizes MongoDB for data storage. Below is a brief overview of the main components:
 
 ## Streaming Video
 
 - **Telegram Stream**: Streams videos with Telegram metadata.
-
-- **View**: Displays videos with a specific URL ID, fetching details from MongoDB.
 
 ## Dependencies
 
