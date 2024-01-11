@@ -80,8 +80,10 @@
             <span class="material-symbols-rounded symbol">schedule</span> Created Time: {{ f_time }}
           </p>
         </div>
-        <!-- JalewaAds - Ad Display Code -->
-        <div id="adm-container-25093" class="hidden"></div>
+        <!-- A Ads - Ad Display Code -->
+        <div id="ad-chk" class="hidden">
+          <iframe data-aa='2293806' src='//ad.a-ads.com/2293806?size=970x250' style='width:970px; height:250px; border:0px; padding:0; overflow:hidden; background-color: transparent;'></iframe>
+        </div>
         <script data-cfasync="false" async type="text/javascript" src="//display.jalewaads.com/display/items.php?25093&10747&300&250&4&0&0"></script>
         <!-- Adsterra - Ad Display Code -->
         <script async="async" data-cfasync="false" src="//outrightsham.com/ab5b66807aad5d215f4e58b175367e73/invoke.js"></script>
@@ -216,7 +218,7 @@
     <!--     Anti Adblocker Code -->
     <script>
       window.onload = function() {
-        var ad_elm = document.getElementById("adm-container-25093");
+        var ad_elm = document.getElementById("ad-chk");
         if (ad_elm.clientHeight === 0 || ad_elm.style.visibility === "hidden") {
           document.getElementById("superadblocker").classList.remove("hidden")
         }
