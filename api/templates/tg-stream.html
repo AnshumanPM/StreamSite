@@ -148,32 +148,9 @@
     </footer>
     <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
     <script>
-      let icon = document.getElementById("icon");
-      if (localStorage.getItem("theme") == null) {
-        localStorage.setItem("theme", "dark");
-      }
-      let localData = localStorage.getItem("theme");
-      if (localData == "dark") {
-        icon.src = "https://cdn.anshumanpm.eu.org/theme/light_mode.svg";
-        document.body.classList.remove("white-theme");
-      } else if (localData == "light") {
-        icon.src = "https://cdn.anshumanpm.eu.org/theme/dark_mode.svg";
-        document.body.classList.add("white-theme");
-      }
-      icon.onclick = function() {
-        document.body.classList.toggle("white-theme");
-        if (document.body.classList.contains("white-theme")) {
-          icon.src = "https://cdn.anshumanpm.eu.org/theme/dark_mode.svg";
-          localStorage.setItem("theme", "light");
-        } else {
-          icon.src = "https://cdn.anshumanpm.eu.org/theme/light_mode.svg";
-          localStorage.setItem("theme", "dark");
-        }
-      }
-    </script>
-    <script>
       let videoUrl = "{{ video_url }}";
       let tgFileUrl = "{{ tg_file_url }}";
+      let fileName = "{{ f_name | quote_plus }}";
       let videoElement = document.getElementById('player').getElementsByTagName('source');
       for (let i = 0; i < videoElement.length; i++) {
         videoElement[i].src = videoUrl;
@@ -184,45 +161,13 @@
         playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
         poster: "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg",
       });
-      document.getElementById("dlButton").onclick = function() {
-        window.location.href = videoUrl;
-      };
-      document.getElementById("getFileButton").onclick = function() {
-        window.location.href = tgFileUrl;
-      };
-      document.getElementById("mxButton").onclick = function() {
-        window.location.href = `intent:${videoUrl}#Intent;package=com.mxtech.videoplayer.ad;S.title={{ f_name | quote_plus }};end`;
-      };
-      document.getElementById("vlcButton").onclick = function() {
-        window.location.href = `vlc://${videoUrl}`;
-      };
-      document.getElementById("playitButton").onclick = function() {
-        window.location.href = `playit://playerv2/video?url=${videoUrl}&amp;`;
-      };
-      document.getElementById("splayButton").onclick = function() {
-        window.location.href = `intent:${videoUrl}#Intent;action=com.young.simple.player.playback_online;package=com.young.simple.player;end`;
-      };
-      document.getElementById("kmplayButton").onclick = function() {
-        window.location.href = `intent:${videoUrl}#Intent;package=com.kmplayer;end`;
-      };
-      document.getElementById("hdplayButton").onclick = function() {
-        window.location.href = `intent:${videoUrl}#Intent;package=uplayer.video.player;end`;
-      };
     </script>
+    <script src="https://cdn.anshumanpm.eu.org/StreamSite/script.js"></script>
     <!-- Popunder Ads -->
     <script>
       (function(s, u, z, p) {
         s.src = u, s.setAttribute('data-zone', z), p.appendChild(s);
       })(document.createElement('script'), 'https://arvigorothan.com/tag.min.js', 6666095, document.body || document.documentElement)
-    </script>
-    <!--     Anti Adblocker Code -->
-    <script>
-      window.onload = function() {
-        var ad_elm = document.getElementById("ad-chk");
-        if (ad_elm.clientHeight === 0 || ad_elm.style.visibility === "hidden") {
-          document.getElementById("superadblocker").classList.remove("hidden")
-        }
-      };
     </script>
   </body>
 </html>
