@@ -103,6 +103,15 @@
         playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
         poster: "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg",
       });
+      player.ready(function() {
+        player.on('fullscreenchange', function() {
+          if (player.isFullscreen() && screen.orientation) {
+            screen.orientation.lock('landscape');
+          } else if (!player.isFullscreen() && screen.orientation) {
+            screen.orientation.unlock();
+          }
+        });
+      });
       document.getElementById("dlButton").onclick = function() {
         location.href = videoUrl;
       };
