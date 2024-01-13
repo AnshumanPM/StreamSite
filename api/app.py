@@ -1,54 +1,17 @@
 import json
-import os
 from urllib.parse import quote_plus, unquote_plus
 
-import requests
-from flask import Flask, Response, render_template, render_template_string, request
+from flask import Flask, Response, render_template, request
 from hashids import Hashids
-from pymongo import MongoClient
 
-from helper import auto_increment_id, decode_string, extract_gdrive_id, is_valid_url
+from config import HASH_SALT, NEW_DL_BASE_URL, OLD_DL_BASE_URL_1, OLD_DL_BASE_URL_2
+from database import new_collection
+from helper import decode_string, extract_gdrive_id, is_valid_url
 
 app = Flask(__name__)
 app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
 
-hash_salt = os.environ.get("HASH_SALT")
-hashids = Hashids(salt=hash_salt)
-
-# db setup
-db_url = os.environ.get("MONGO_URL")
-client = MongoClient(db_url)
-db = client["mydb"]
-collection = db["links"]
-new_collection = db["new_links"]
-
-# Dl Urls
-OLD_DL_BASE_URL_1 = os.environ.get("OLD_DL_BASE_URL_1")
-OLD_DL_BASE_URL_2 = os.environ.get("OLD_DL_BASE_URL_2")
-NEW_DL_BASE_URL = os.environ.get("NEW_DL_BASE_URL")
-
-
-@app.route("/short/v3", methods=["POST"])
-def short_api_v3():
-    try:
-        org_url = request.form["url"]
-        url_id = auto_increment_id()
-        collection.insert_one({"url_id": url_id, "long_url": org_url})
-        hashid = hashids.encode(url_id)
-        short_url = f"{request.host_url}tg/{hashid}"
-        response_data = {
-            "org_url": org_url,
-            "short_url": short_url,
-        }
-        json_data = json.dumps(response_data, indent=4)
-        return Response(json_data, content_type="application/json")
-    except BaseException:
-        response_data = {
-            "org_url": url,
-            "short_url": "https://www.anshumanpm.eu.org",
-        }
-        json_data = json.dumps(response_data, indent=4)
-        return Response(json_data, content_type="application/json")
+hashids = Hashids(salt=HASH_SALT)
 
 
 @app.route("/short/v4", methods=["POST"])
@@ -144,17 +107,6 @@ def view(url_id):
         return render_template("homepage.html", invalid_link=True)
 
 
-@app.route("/tg/<id>")
-def tg(id):
-    try:
-        url_id = hashids.decode(id)[0]
-        original_url = collection.find_one({"url_id": url_id})["long_url"]
-        html = requests.get(original_url).content.decode("utf-8")
-        return render_template_string(html)
-    except BaseException:
-        return render_template("homepage.html", invalid_link=True)
-
-
 @app.route("/stream")
 def stream():
     video_url = request.args.get("url")
@@ -171,8 +123,8 @@ def home_page():
     if request.method == "POST":
         video_url = request.form["url"]
         if is_valid_url(video_url):
-            if extract_gdrive_id(video_url):
-                video_url = f"https://gdl.anshumanpm.eu.org/direct.aspx?id={extract_gdrive_id(video_url)}"
+            if gid := extract_gdrive_id(video_url):
+                video_url = f"https://gdl.anshumanpm.eu.org/direct.aspx?id={gid}"
             return render_template("stream.html", video_url=video_url)
         else:
             return render_template(
