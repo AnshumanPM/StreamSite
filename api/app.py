@@ -1,17 +1,15 @@
 import json
 from urllib.parse import quote_plus, unquote_plus
 
-from flask import Flask, Response, render_template, request
-from hashids import Hashids
+import requests
+from flask import Flask, Response, render_template, render_template_string, request
 
-from config import HASH_SALT, NEW_DL_BASE_URL, OLD_DL_BASE_URL_1, OLD_DL_BASE_URL_2
-from database import new_collection
-from helper import decode_string, extract_gdrive_id, is_valid_url
+from config import NEW_DL_BASE_URL, OLD_DL_BASE_URL_1, OLD_DL_BASE_URL_2
+from database import collection, new_collection
+from helper import decode_string, extract_gdrive_id, hashids, is_valid_url
 
 app = Flask(__name__)
 app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
-
-hashids = Hashids(salt=HASH_SALT)
 
 
 @app.route("/short/v4", methods=["POST"])
@@ -73,6 +71,18 @@ def tg_stream():
         except BaseException:
             return "Invalid Input!"
     return "Invalid URL!"
+
+
+# Again Added For Old Link
+@app.route("/tg/<id>")
+def tg(id):
+    try:
+        url_id = hashids.decode(id)[0]
+        original_url = collection.find_one({"url_id": url_id})["long_url"]
+        html = requests.get(original_url).content.decode("utf-8")
+        return render_template_string(html)
+    except BaseException:
+        return render_template("homepage.html", invalid_link=True)
 
 
 @app.route("/view/<url_id>")
