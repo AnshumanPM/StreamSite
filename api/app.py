@@ -1,8 +1,7 @@
 import json
 from urllib.parse import quote_plus, unquote_plus
 
-import requests
-from flask import Flask, Response, render_template, render_template_string, request
+from flask import Flask, Response, redirect, render_template, request
 
 from config import NEW_DL_BASE_URL, OLD_DL_BASE_URL_1, OLD_DL_BASE_URL_2
 from database import collection, new_collection
@@ -23,6 +22,7 @@ def short_api_v4():
         )
         short_url = f"{request.host_url}view/{url_id}"
         response_data = {
+            "status": 200,
             "url_id": url_id,
             "short_url": short_url,
         }
@@ -30,6 +30,7 @@ def short_api_v4():
         return Response(json_data, content_type="application/json")
     except BaseException:
         response_data = {
+            "status": 400,
             "url_id": 0,
             "short_url": request.host_url,
         }
@@ -79,8 +80,7 @@ def tg(id):
     try:
         url_id = hashids.decode(id)[0]
         original_url = collection.find_one({"url_id": url_id})["long_url"]
-        html = requests.get(original_url).content.decode("utf-8")
-        return render_template_string(html)
+        return redirect(original_url)
     except BaseException:
         return render_template("homepage.html", invalid_link=True)
 
