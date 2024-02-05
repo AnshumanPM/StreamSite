@@ -64,7 +64,6 @@ def tg_stream():
                 f_owner=f_owner,
                 f_time=f_time,
                 tg_file_url=tg_file_url,
-                ads_link=ads_link,
             )
         except BaseException:
             return "Invalid Input!"
@@ -105,7 +104,6 @@ def view(url_id):
             f_owner=f_owner,
             f_time=f_time,
             tg_file_url=tg_file_url,
-            ads_link=ads_link,
         )
     except BaseException:
         return render_template("homepage.html", invalid_link=True)
