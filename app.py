@@ -52,9 +52,6 @@ def tg_stream():
             f_size = data[1]
             f_owner = data[2]
             f_time = data[3]
-            ads_link = (
-                "https://outrightsham.com/rrnx759f?key=d682ebbe96219cb8de23f4109a7b11c8"
-            )
             try:
                 tg_file_url = data[4]
             except BaseException:
@@ -100,9 +97,6 @@ def view(url_id):
         f_owner = data[2]
         f_time = data[3]
         tg_file_url = data[4]
-        ads_link = (
-            "https://outrightsham.com/rrnx759f?key=d682ebbe96219cb8de23f4109a7b11c8"
-        )
         return render_template(
             "tg-stream.html",
             video_url=video_url,
