@@ -112,12 +112,7 @@ def view(url_id):
 @app.route("/stream")
 def stream():
     video_url = request.args.get("url")
-    if is_valid_url(video_url):
-        return render_template("stream.html", video_url=video_url)
-    else:
-        return render_template(
-            "homepage.html", input_value=video_url, invalid_link=True
-        )
+    return render_template("stream.html", video_url=video_url)
 
 
 @app.route("/", methods=["GET", "POST"])
