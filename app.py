@@ -78,7 +78,7 @@ def tg(id):
         original_url = collection.find_one({"url_id": url_id})["long_url"]
         return redirect(original_url)
     except BaseException:
-        return render_template("homepage.html", invalid_link=True)
+        return render_template("homepage.html", error_msg="Invalid Video Link")
 
 
 @app.route("/view/<url_id>")
@@ -106,7 +106,7 @@ def view(url_id):
             tg_file_url=tg_file_url,
         )
     except BaseException:
-        return render_template("homepage.html", invalid_link=True)
+        return render_template("homepage.html", error_msg="Invalid Video Link")
 
 
 @app.route("/stream")
@@ -125,7 +125,7 @@ def home_page():
             return render_template("stream.html", video_url=video_url)
         else:
             return render_template(
-                "homepage.html", input_value=video_url, invalid_link=True
+                "homepage.html", input_value=video_url, error_msg="Invalid Video Link"
             )
     return render_template("homepage.html")
 
