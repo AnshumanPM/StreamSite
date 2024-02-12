@@ -36,7 +36,7 @@
     </header>
     <main>
       <div class="container">
-        <center> {% if invalid_link %} <div class="alert alert-danger" role="alert"> Invalid Video Link </div> {% endif %} <h4 class="mt-4">Play Videos via Links</h4>
+        <center> {% if error_msg %} <div class="alert alert-danger" role="alert"> {{ error_msg }} </div> {% endif %} <h4 class="mt-4">Play Videos via Links</h4>
           <form method="post" action="/">
             <div class="form-group">
               <input type="text" class="form-control" name="url" placeholder="Enter video link" value="{{ input_value }}" required>
