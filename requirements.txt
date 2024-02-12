@@ -5,3 +5,4 @@ pymongo==4.4.0
 requests==2.31.0
 validators==0.22.0
 Werkzeug==3.0.0
+dnspython>=2.6.0rc1 # not directly required, pinned by Snyk to avoid a vulnerability
