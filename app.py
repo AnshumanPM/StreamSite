@@ -106,7 +106,9 @@ def view(url_id):
             tg_file_url=tg_file_url,
         )
     except BaseException:
-        return render_template("homepage.html", error_msg="Link Expired or Invalid Link")
+        return render_template(
+            "homepage.html", error_msg="Link Expired or Invalid Link"
+        )
 
 
 @app.route("/stream")
