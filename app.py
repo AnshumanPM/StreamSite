@@ -116,11 +116,14 @@ def stream():
     video_url = request.args.get("url")
     return render_template("stream.html", video_url=video_url)
 
+
 # For A Ads Verification
+
+
 @app.route("/ads")
 def ads_view():
     return render_template("ads.html")
-    
+
 
 @app.route("/", methods=["GET", "POST"])
 def home_page():
