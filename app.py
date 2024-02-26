@@ -69,8 +69,7 @@ def tg_stream():
             return render_template(
             "homepage.html", error_msg="Link Expired or Invalid Link"
         )
-    except BaseException:
-        return render_template(
+    return render_template(
             "homepage.html", error_msg="Link Expired or Invalid Link"
         )
 
