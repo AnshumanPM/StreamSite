@@ -65,9 +65,12 @@ def tg_stream():
                 f_time=f_time,
                 tg_file_url=tg_file_url,
             )
-        except BaseException:
-            return "Invalid Input!"
-    return "Invalid URL!"
+        return render_template(
+            "homepage.html", error_msg="Link Expired or Invalid Link"
+        )
+    return render_template(
+            "homepage.html", error_msg="Link Expired or Invalid Link"
+        )
 
 
 # Again Added For Old Link
