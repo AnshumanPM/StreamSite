@@ -38,9 +38,6 @@
     </header>
     <main>
       <div class="container">
-        <div>
-          <marquee>{{ f_name }}</marquee>
-        </div>
         <video id="player" class="video-js">
           <source type="video/mp4">
           <source type="video/webm">
@@ -110,7 +107,7 @@
       </div>
     </footer>
     <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
-    <script data-cfasync="false">
+    <script>
       let videoUrl = "{{ video_url }}";
       let tgFileUrl = "{{ tg_file_url }}";
       let fileName = "{{ f_name | quote_plus }}";
