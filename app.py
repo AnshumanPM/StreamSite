@@ -86,7 +86,7 @@ def tg(id):
 @app.route("/view/<url_id>")
 def view(url_id):
     try:
-        obj = new_collection.find_one({"url_id": quote_plus(url_id)})
+        obj = new_collection.find_one({"url_id": url_id})
         old_video_url = obj["dl_url"]
         metadata = obj["metadata"]
         video_url = old_video_url.replace(OLD_DL_BASE_URL_1, NEW_DL_BASE_URL).replace(
