@@ -1,0 +1,31 @@
+#ShareusADX GAM360 ~ Us/wyoming ~ publisher.shareus.io
+google.com, pub-2765589869136313, DIRECT, f08c47fec0942fa0
+google.com, pub-4219948434523868, DIRECT, f08c47fec0942fa0
+taboola.com,1674195,DIRECT,c228e6794e811952
+tremorhub.com, z87wm, RESELLER, 1a4e959a1b50034a
+google.com, pub-5334994948905250, DIRECT, f08c47fec0942fa0
+pubmatic.com, 156307, RESELLER, 5d62403b186f2ace
+google.com, pub-1976219331264509, DIRECT, f08c47fec0942fa0
+smartadserver.com, 3563, RESELLER
+google.com, pub-3441288338438069, DIRECT, f08c47fec0942fa0
+sorbet.live, s15294, DIRECT
+amxrtb.com, 105199725, RESELLER
+google.com, pub-2244982734897930, DIRECT, f08c47fec0942fa0
+conversantmedia.com, 100535, RESELLER, 03113cd04947736d
+google.com, pub-8435397869796667, DIRECT, f08c47fec0942fa0
+google.com, pub-2808072270929469, DIRECT, f08c47fec0942fa0
+google.com, pub-4747565717463627, DIRECT, f08c47fec0942fa0
+google.com, pub-1546672731172919, DIRECT, f08c47fec0942fa0
+video.unrulymedia.com, 1166984029, RESELLER
+google.com, pub-1183583562494689, DIRECT, f08c47fec0942fa0
+google.com, pub-5070738875486154, DIRECT, f08c47fec0942fa0
+beachfront.com, 13749, RESELLER, e2541279e8e2ca4d
+google.com, pub-2898749497523935, DIRECT, f08c47fec0942fa0
+google.com, pub-1334111973007529, DIRECT, f08c47fec0942fa0
+google.com, pub-1026655592072967, DIRECT, f08c47fec0942fa0
+improvedigital.com, 1577, RESELLER
+google.com, pub-8330421035796418, DIRECT, f08c47fec0942fa0
+google.com, pub-2208140864064594, DIRECT, f08c47fec0942fa0
+smartadserver.com, 3563, RESELLER
+smaato.com, 1100047487, RESELLER, 07bcf65f187117b4
+#shareusadsend
