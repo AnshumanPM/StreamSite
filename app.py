@@ -1,7 +1,15 @@
 import json
-from urllib.parse import quote_plus, unquote_plus
 import os
-from flask import Flask, Response, redirect, render_template, request, send_from_directory
+from urllib.parse import quote_plus, unquote_plus
+
+from flask import (
+    Flask,
+    Response,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+)
 
 from config import NEW_DL_BASE_URL, OLD_DL_BASE_URL_1, OLD_DL_BASE_URL_2
 from database import collection, new_collection
