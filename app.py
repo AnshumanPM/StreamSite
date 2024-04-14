@@ -1,7 +1,7 @@
 import json
 from urllib.parse import quote_plus, unquote_plus
-
-from flask import Flask, Response, redirect, render_template, request
+import os
+from flask import Flask, Response, redirect, render_template, request, send_from_directory
 
 from config import NEW_DL_BASE_URL, OLD_DL_BASE_URL_1, OLD_DL_BASE_URL_2
 from database import collection, new_collection
@@ -119,12 +119,13 @@ def stream():
     return render_template("stream.html", video_url=video_url)
 
 
-# For A Ads Verification
+# For Adx
 
 
-@app.route("/ads")
-def ads_view():
-    return render_template("ads.html")
+@app.route("/ads.txt")
+def serve_ads_txt():
+    directory = os.path.abspath(".")
+    return send_from_directory(directory, "ads.txt", as_attachment=False)
 
 
 @app.route("/", methods=["GET", "POST"])
