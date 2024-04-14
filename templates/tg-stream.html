@@ -38,7 +38,10 @@
     </header>
     <main>
       <div class="container">
-        <video-js id="player" class="video-js"></video-js>
+        <video id="player" class="video-js">
+          <source type="video/mp4">
+          <source type="video/webm">
+        </video>
         <br />
         <br />
         <div class="allBtn">
@@ -120,12 +123,15 @@
       let videoUrl = "{{ video_url }}";
       let tgFileUrl = "{{ tg_file_url }}";
       let fileName = "{{ f_name | quote_plus }}";
+      let videoElement = document.getElementById('player').getElementsByTagName('source');
+      for (let i = 0; i < videoElement.length; i++) {
+        videoElement[i].src = videoUrl;
+      }
       const player = videojs('#player', {
         controls: true,
         aspectRatio: "16:9",
         playbackRates: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
         poster: "https://cdn.jsdelivr.net/npm/@googledrive/index@2.2.3/images/poster.jpg",
-        sources: {src: videoUrl},
       });
       player.ready(function() {
         player.on('fullscreenchange', function() {
