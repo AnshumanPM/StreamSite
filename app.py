@@ -13,7 +13,7 @@ from flask import (
 
 from config import NEW_DL_BASE_URL, OLD_DL_BASE_URL_1, OLD_DL_BASE_URL_2
 from database import collection, new_collection
-from helper import decode_string, extract_gdrive_id, hashids, is_valid_url
+from helper import decode_string, extract_gdrive_id, hashids, hide_name, is_valid_url
 
 app = Flask(__name__)
 app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
@@ -56,9 +56,9 @@ def tg_stream():
     if video_url != "" and metadata != "":
         try:
             data = decode_string(unquote_plus(metadata)).split("|")
-            f_name = data[0]
+            f_name = hide_name(data[0])
             f_size = data[1]
-            f_owner = data[2]
+            f_owner = hide_name(data[2])
             f_time = data[3]
             try:
                 tg_file_url = data[4]
@@ -101,9 +101,9 @@ def view(url_id):
             OLD_DL_BASE_URL_2, NEW_DL_BASE_URL
         )
         data = decode_string(unquote_plus(metadata)).split("|")
-        f_name = data[0]
+        f_name = hide_name(data[0])
         f_size = data[1]
-        f_owner = data[2]
+        f_owner = hide_name(data[2])
         f_time = data[3]
         tg_file_url = data[4]
         return render_template(

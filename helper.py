@@ -9,6 +9,13 @@ from config import HASH_SALT
 hashids = Hashids(salt=HASH_SALT)
 
 
+def hide_name(name):
+    if len(name) <= 4:
+        return name
+    else:
+        return name[:2] + "*" * (len(name) - 4) + name[-2:]
+
+
 def decode_string(encoded):
     decoded = "".join([chr(i) for i in hashids.decode(encoded)])
     return decoded
