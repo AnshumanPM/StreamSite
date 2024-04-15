@@ -11,8 +11,8 @@ hashids = Hashids(salt=HASH_SALT)
 
 def hide_name(name):
     words = name.split()
-    hidden_words = [word[0] + '****' if len(word) > 1 else word for word in words]
-    return ' '.join(hidden_words)
+    hidden_words = [word[0] + "****" if len(word) > 1 else word for word in words]
+    return " ".join(hidden_words)
 
 
 def decode_string(encoded):
