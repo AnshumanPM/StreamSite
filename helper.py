@@ -14,7 +14,7 @@ def hide_name(name):
     hidden_words = []
     for word in words:
         if len(word) > 4:
-            hidden_word = word[:2] + '***' + word[-2:]
+            hidden_word = word[:2] + "***" + word[-2:]
         else:
             hidden_word = word
         hidden_words.append(hidden_word)
