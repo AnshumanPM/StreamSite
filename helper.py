@@ -4,9 +4,24 @@ import urllib.parse
 import validators
 from hashids import Hashids
 
-from config import HASH_SALT
+from config import (
+    HASH_SALT,
+    NEW_DL_BASE_URL,
+    NEW_DL_BASE_URL_3,
+    OLD_DL_BASE_URL_1,
+    OLD_DL_BASE_URL_2,
+    OLD_DL_BASE_URL_3,
+)
 
 hashids = Hashids(salt=HASH_SALT)
+
+
+def gen_video_link(old_video_url):
+    return (
+        old_video_url.replace(OLD_DL_BASE_URL_1, NEW_DL_BASE_URL)
+        .replace(OLD_DL_BASE_URL_2, NEW_DL_BASE_URL)
+        .replace(OLD_DL_BASE_URL_3, NEW_DL_BASE_URL_3)
+    )
 
 
 def hide_name(name):

@@ -11,9 +11,15 @@ from flask import (
     send_from_directory,
 )
 
-from config import NEW_DL_BASE_URL, OLD_DL_BASE_URL_1, OLD_DL_BASE_URL_2
 from database import collection, new_collection
-from helper import decode_string, extract_gdrive_id, hashids, hide_name, is_valid_url
+from helper import (
+    decode_string,
+    extract_gdrive_id,
+    gen_video_link,
+    hashids,
+    hide_name,
+    is_valid_url,
+)
 
 app = Flask(__name__)
 app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
@@ -50,9 +56,7 @@ def short_api_v4():
 def tg_stream():
     old_video_url = request.args.get("url")
     metadata = request.args.get("meta")
-    video_url = old_video_url.replace(OLD_DL_BASE_URL_1, NEW_DL_BASE_URL).replace(
-        OLD_DL_BASE_URL_2, NEW_DL_BASE_URL
-    )
+    video_url = gen_video_link(old_video_url)
     if video_url != "" and metadata != "":
         try:
             data = decode_string(unquote_plus(metadata)).split("|")
@@ -97,9 +101,7 @@ def view(url_id):
         obj = new_collection.find_one({"url_id": url_id})
         old_video_url = obj["dl_url"]
         metadata = obj["metadata"]
-        video_url = old_video_url.replace(OLD_DL_BASE_URL_1, NEW_DL_BASE_URL).replace(
-            OLD_DL_BASE_URL_2, NEW_DL_BASE_URL
-        )
+        video_url = gen_video_link(old_video_url)
         data = decode_string(unquote_plus(metadata)).split("|")
         f_name = hide_name(data[0])
         f_size = data[1]
