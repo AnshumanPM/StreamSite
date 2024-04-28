@@ -10,13 +10,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.anshumanpm.eu.org/Favicon/favicon-16x16.png">
     <link rel="manifest" href="https://cdn.anshumanpm.eu.org/Favicon/site.webmanifest">
     <link rel="stylesheet" href="https://vjs.zencdn.net/8.6.1/video-js.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4/dist/materia/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5/dist/materia/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.anshumanpm.eu.org/StreamSite/style.css">
     <link rel="stylesheet" href="https://cdn.anshumanpm.eu.org/AntiAdblocker/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SM974R3G71"></script>
     <script>
@@ -31,10 +29,29 @@
   </head>
   <body>
     <header>
-      <a href="/">
-        <img id="navlogo" src="https://cdn.anshumanpm.eu.org/logo.png" alt="logo">
-      </a>
-      <img id="icon" src="https://cdn.anshumanpm.eu.org/theme/light_mode.svg" alt="themeToggle">
+      <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <img id="navlogo" src="https://cdn.anshumanpm.eu.org/logo.png" alt="logo">
+          </a>
+          <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse" id="navbarColor02" style="">
+            <ul class="navbar-nav me-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item">
+                <img id="themeIcon" src="https://cdn.anshumanpm.eu.org/theme/light_mode.svg" alt="themeToggle">
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
     <main>
       <div class="container">
@@ -46,32 +63,40 @@
         <br />
         <div class="allBtn">
           <button id="dlButton" class="btn btn-primary btn-block">
-            <i class="fa fa-cloud-arrow-down"></i> Download <i class="fa fa-cloud-arrow-down"></i></button>
+            <i class="fa fa-cloud-arrow-down"></i> Download <i class="fa fa-cloud-arrow-down"></i>
+          </button>
           <div class="btn-group">
-            <button id="dropbtn" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-circle-play"></i> Stream <i class="fa fa-circle-play"></i></button>
-            <div id="dropmenu" class="dropdown-menu">
-              <button id="mxButton" class="dropdown-item">MX Player</button>
-              <button id="vlcButton" class="dropdown-item">VLC Mobile</button>
-              <button id="playitButton" class="dropdown-item">PlayIt</button>
-              <button id="splayButton" class="dropdown-item">SPlayer</button>
-              <button id="jplayButton" class="dropdown-item">JPlayer</button>
-              <button id="kmplayButton" class="dropdown-item">KMPlayer</button>
-              <button id="hdplayButton" class="dropdown-item">HDPlayer</button>
-            </div>
+            <button type="button" id="dropbtn" class="btn btn-primary dropdown-toggle" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa fa-circle-play"></i> Stream <i class="fa fa-circle-play"></i>
+            </button>
+            <ul id="dropmenu" class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <li id="mxButton" class="dropdown-item">MX Player</li>
+              <li id="vlcButton" class="dropdown-item">VLC Mobile</li>
+              <li id="playitButton" class="dropdown-item">PlayIt</li>
+              <li id="splayButton" class="dropdown-item">SPlayer</li>
+              <li id="jplayButton" class="dropdown-item">JPlayer</li>
+              <li id="kmplayButton" class="dropdown-item">KMPlayer</li>
+              <li id="hdplayButton" class="dropdown-item">HDPlayer</li>
+            </ul>
           </div>
           <button id="getFileButton" class="btn btn-primary btn-block">
-            <i class="fab fa-telegram"></i> Get TG File <i class="fab fa-telegram"></i></button>
+            <i class="fab fa-telegram"></i> Get TG File <i class="fab fa-telegram"></i>
+          </button>
         </div>
         <br />
         <!-- Ad Display Code -->
         <div class="adDiv">
-          <script type="module" src="https://securepubads.shareusads.com/scripts/tag/js/sgpt.js" ></script>
+          <script type="module" src="https://securepubads.shareusads.com/scripts/tag/js/sgpt.js"></script>
           <div id="shareusadx-2765589869136313-8160672342">
-           <script>
-               window._shareustag = window._shareustag || {cmd:[]};
+            <script>
+              window._shareustag = window._shareustag || {
+                cmd: []
+              };
               _shareustag.cmd.push(function() {
-                var slot1 = _shareustag.defineSlot('/shareusadx/2765589869136313/8160672342/Banner Ad', [[250,250],[300,250]],'shareusadx-2765589869136313-8160672342');
+                var slot1 = _shareustag.defineSlot('/shareusadx/2765589869136313/8160672342/Banner Ad', [
+                  [250, 250],
+                  [300, 250]
+                ], 'shareusadx-2765589869136313-8160672342');
               });
             </script>
           </div>
@@ -110,11 +135,11 @@
       </div>
     </main>
     <footer class="footer">
-      <div class="text-muted">Made with <i class="fa fa-heart heartbeat"></i> by <b>
+      <div>Made with <i class="fa fa-heart heartbeat"></i> by <b>
           <a href="mailto:webmaster@anshbotzone.tech">AnshumanPM</a>
         </b>
       </div>
-      <div class="text-muted">Telegram <b>
+      <div>Telegram <b>
           <a href="https://telegram.me/AnshBotZone">Anshuman Bot Updates</a>
         </b>
       </div>
