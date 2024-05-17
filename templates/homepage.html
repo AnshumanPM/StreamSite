@@ -43,7 +43,7 @@
                 <a class="nav-link" href="#">About</a>
               </li>
               <li class="nav-item">
-                <img id="themeIcon" src="https://cdn.anshumanpm.eu.org/theme/light_mode.svg" alt="themeToggle">
+                <div class="nav-link"><i id="themeIcon" class="fa fa-sun"></i></div>
               </li>
             </ul>
           </div>
@@ -76,25 +76,28 @@
     <script>
       let themeIcon = document.getElementById("themeIcon");
       if (localStorage.getItem("theme") == null) {
-        localStorage.setItem("theme", "dark");
+          localStorage.setItem("theme", "dark");
       }
       let localData = localStorage.getItem("theme");
       if (localData == "dark") {
-        themeIcon.src = "https://cdn.anshumanpm.eu.org/theme/light_mode.svg";
+        themeIcon.classList.add("fa-sun");
         document.body.classList.remove("white-theme");
       } else if (localData == "light") {
-        themeIcon.src = "https://cdn.anshumanpm.eu.org/theme/dark_mode.svg";
-        document.body.classList.add("white-theme");
+        themeIcon.classList.remove("fa-sun");
+        themeIcon.classList.add("fa-moon");
+          document.body.classList.add("white-theme");
       }
       themeIcon.onclick = function() {
-        document.body.classList.toggle("white-theme");
-        if (document.body.classList.contains("white-theme")) {
-          themeIcon.src = "https://cdn.anshumanpm.eu.org/theme/dark_mode.svg";
-          localStorage.setItem("theme", "light");
-        } else {
-          themeIcon.src = "https://cdn.anshumanpm.eu.org/theme/light_mode.svg";
-          localStorage.setItem("theme", "dark");
-        }
+          document.body.classList.toggle("white-theme");
+          if (document.body.classList.contains("white-theme")) {
+              themeIcon.classList.remove("fa-sun");
+        themeIcon.classList.add("fa-moon");
+              localStorage.setItem("theme", "light");
+          } else {
+            themeIcon.classList.remove("fa-moon");
+            themeIcon.classList.add("fa-sun");
+              localStorage.setItem("theme", "dark");
+          }
       }
     </script>
   </body>
