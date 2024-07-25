@@ -120,7 +120,7 @@
       }
     </script>
     <script>
-      let videoUrl = "{{ video_url }}";
+      let videoUrl = "{{ video_url | safe }}";
       let videoElement = document.getElementById('player').getElementsByTagName('source');
       for (let i = 0; i < videoElement.length; i++) {
         videoElement[i].src = videoUrl;
