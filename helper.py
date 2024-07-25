@@ -49,7 +49,7 @@ def gen_video_link(video_url):
         video_streams = yt.streams.filter(progressive=True)
         return video_streams.get_highest_resolution().url
     elif parsed_url.netloc in ["drive.google.com"]:
-        gid = extract_gdrive_id(video_url):
+        gid = extract_gdrive_id(video_url)
         return f"https://gdl.anshumanpm.eu.org/direct.aspx?id={gid}"
     # For Stream Bot
     elif parsed_url.netloc in OLD_DL_BASE_URL:
