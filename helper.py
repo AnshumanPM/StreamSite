@@ -44,7 +44,7 @@ def extract_gdrive_id(gdrive_link):
 
 
 def gen_video_link(video_url):
-    parsed_url = urlparse(url)
+    parsed_url = urlparse(video_url)
     if parsed_url.netloc in ["youtube.com", "youtu.be"]:
         yt = YouTube(video_url)
         video_streams = yt.streams.filter(progressive=True)
