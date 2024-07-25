@@ -33,14 +33,15 @@ def is_valid_url(url):
 
 def extract_gdrive_id(gdrive_link):
     match = re.match(
-        r"^https://drive\.google\.com/file/d/([a-zA-Z0-9_-]+)/?.*$",
-        gdrive_link)
+        r"^https://drive\.google\.com/file/d/([a-zA-Z0-9_-]+)/?.*$", gdrive_link
+    )
     if match:
         return match.group(1)
     query_params = parse_qs(urlparse(gdrive_link).query)
     if "id" in query_params:
         return query_params["id"][0]
     return None
+
 
 def gen_video_link(video_url):
     parsed_url = urlparse(url)
@@ -54,7 +55,14 @@ def gen_video_link(video_url):
     # For Stream Bot
     elif parsed_url.netloc in OLD_DL_BASE_URL:
         return urlunparse(
-        (parsed_url.scheme, NEW_DL_BASE_URL, parsed_url.path,
-         parsed_url.params, parsed_url.query, parsed_url.fragment))
+            (
+                parsed_url.scheme,
+                NEW_DL_BASE_URL,
+                parsed_url.path,
+                parsed_url.params,
+                parsed_url.query,
+                parsed_url.fragment,
+            )
+        )
     else:
         return video_url

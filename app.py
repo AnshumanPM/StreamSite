@@ -1,24 +1,10 @@
 import json
-import os
 from urllib.parse import quote_plus, unquote_plus
 
-from flask import (
-    Flask,
-    Response,
-    redirect,
-    render_template,
-    request,
-    send_from_directory,
-)
+from flask import Flask, Response, redirect, render_template, request
 
 from database import collection, new_collection
-from helper import (
-    decode_string,
-    gen_video_link,
-    hashids,
-    hide_name,
-    is_valid_url,
-)
+from helper import decode_string, gen_video_link, hashids, hide_name, is_valid_url
 
 app = Flask(__name__)
 app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
