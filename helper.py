@@ -1,27 +1,13 @@
 import re
-import urllib.parse
+from urllib.parse import parse_qs, urlparse, urlunparse
 
 import validators
 from hashids import Hashids
+from pytubefix import YouTube
 
-from config import (
-    HASH_SALT,
-    NEW_DL_BASE_URL,
-    NEW_DL_BASE_URL_3,
-    OLD_DL_BASE_URL_1,
-    OLD_DL_BASE_URL_2,
-    OLD_DL_BASE_URL_3,
-)
+from config import HASH_SALT, NEW_DL_BASE_URL, OLD_DL_BASE_URL
 
 hashids = Hashids(salt=HASH_SALT)
-
-
-def gen_video_link(old_video_url):
-    return (
-        old_video_url.replace(OLD_DL_BASE_URL_1, NEW_DL_BASE_URL)
-        .replace(OLD_DL_BASE_URL_2, NEW_DL_BASE_URL)
-        .replace(OLD_DL_BASE_URL_3, NEW_DL_BASE_URL_3)
-    )
 
 
 def hide_name(name):
@@ -46,14 +32,37 @@ def is_valid_url(url):
 
 
 def extract_gdrive_id(gdrive_link):
-    if "drive.google.com" not in gdrive_link:
-        return None
     match = re.match(
         r"^https://drive\.google\.com/file/d/([a-zA-Z0-9_-]+)/?.*$", gdrive_link
     )
     if match:
         return match.group(1)
-    query_params = urllib.parse.parse_qs(urllib.parse.urlparse(gdrive_link).query)
+    query_params = parse_qs(urlparse(gdrive_link).query)
     if "id" in query_params:
         return query_params["id"][0]
     return None
+
+
+def gen_video_link(video_url):
+    parsed_url = urlparse(url)
+    if parsed_url.netloc in ["youtube.com", "youtu.be"]:
+        yt = YouTube(video_url)
+        video_streams = yt.streams.filter(progressive=True)
+        return video_streams.get_highest_resolution().url
+    elif parsed_url.netloc in ["drive.google.com"]:
+        gid = extract_gdrive_id(video_url)
+        return f"https://gdl.anshumanpm.eu.org/direct.aspx?id={gid}"
+    # For Stream Bot
+    elif parsed_url.netloc in OLD_DL_BASE_URL:
+        return urlunparse(
+            (
+                parsed_url.scheme,
+                NEW_DL_BASE_URL,
+                parsed_url.path,
+                parsed_url.params,
+                parsed_url.query,
+                parsed_url.fragment,
+            )
+        )
+    else:
+        return video_url
