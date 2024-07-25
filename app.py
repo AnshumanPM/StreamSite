@@ -14,7 +14,6 @@ from flask import (
 from database import collection, new_collection
 from helper import (
     decode_string,
-    extract_gdrive_id,
     gen_video_link,
     hashids,
     hide_name,
@@ -129,22 +128,12 @@ def stream():
     return render_template("stream.html", video_url=video_url)
 
 
-# For Adx
-
-
-@app.route("/ads.txt")
-def serve_ads_txt():
-    directory = os.path.abspath(".")
-    return send_from_directory(directory, "ads.txt", as_attachment=False)
-
-
 @app.route("/", methods=["GET", "POST"])
 def home_page():
     if request.method == "POST":
         video_url = request.form["url"]
         if is_valid_url(video_url):
-            if gid := extract_gdrive_id(video_url):
-                video_url = f"https://gdl.anshumanpm.eu.org/direct.aspx?id={gid}"
+            video_url = gen_video_link(video_url)
             return render_template("stream.html", video_url=video_url)
         else:
             return render_template(
