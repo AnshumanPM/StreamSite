@@ -130,4 +130,6 @@ def home_page():
 
 @app.errorhandler(Exception)
 def page_not_found(e):
-    return render_template("error.html")
+    return render_template(
+                "homepage.html", error_msg=str(e)
+    )
