@@ -19,7 +19,7 @@ def short_api_v4():
         new_collection.insert_one(
             {"url_id": url_id, "dl_url": dl_url, "metadata": metadata}
         )
-        short_url = f"https://stream.anshbotzone.tech/view/{url_id}"
+        short_url = f"https://stream.anshbotzone.com/view/{url_id}"
         response_data = {
             "status": 200,
             "url_id": url_id,
@@ -31,7 +31,7 @@ def short_api_v4():
         response_data = {
             "status": 400,
             "url_id": 0,
-            "short_url": "https://stream.anshbotzone.tech/",
+            "short_url": "https://stream.anshbotzone.com/",
         }
         json_data = json.dumps(response_data, indent=4)
         return Response(json_data, content_type="application/json")
