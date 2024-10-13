@@ -133,8 +133,8 @@
     </footer>
     <script src="https://vjs.zencdn.net/8.6.1/video.min.js"></script>
     <script>
-      let videoUrl = "{{ video_url }}";
-      let tgFileUrl = "{{ tg_file_url }}";
+      let videoUrl = "{{ video_url | safe }}";
+      let tgFileUrl = "{{ tg_file_url | safe }}";
       let fileName = "{{ f_name | quote_plus }}";
       let videoElement = document.getElementById('player').getElementsByTagName('source');
       for (let i = 0; i < videoElement.length; i++) {
