@@ -11,7 +11,6 @@ hashids = Hashids(salt=HASH_SALT)
 
 
 def hide_name(name):
-    return name
     words = name.split()
     hidden_words = []
     for word in words:
