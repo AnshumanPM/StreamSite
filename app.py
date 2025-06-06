@@ -27,7 +27,7 @@ async def short_api_v4(
         new_collection.insert_one(
             {"url_id": url_id, "dl_url": dl_url, "metadata": metadata}
         )
-        short_url = f"https://stream.anshbotzone.com/play/{url_id}"
+        short_url = f"https://stream.anshbotzone.com/view/{url_id}"
         return JSONResponse(
             content={
                 "status": 200,
