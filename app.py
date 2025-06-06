@@ -45,6 +45,31 @@ async def short_api_v4(
             status_code=400,
         )
 
+@app.post("/short/v5")
+async def short_api_v5(
+    url_id: str = Form(...), dl_url: str = Form(...), metadata: str = Form(...)
+):
+    try:
+        new_collection.insert_one(
+            {"url_id": url_id, "dl_url": dl_url, "metadata": metadata}
+        )
+        short_url = f"https://stream.anshbotzone.com/play/{url_id}"
+        return JSONResponse(
+            content={
+                "status": 200,
+                "url_id": url_id,
+                "short_url": short_url,
+            }
+        )
+    except Exception:
+        return JSONResponse(
+            content={
+                "status": 400,
+                "url_id": 0,
+                "short_url": "https://stream.anshbotzone.com/",
+            },
+            status_code=400,
+        )
 
 @app.get("/tg/stream", response_class=HTMLResponse)
 async def tg_stream(
@@ -101,14 +126,13 @@ async def tg_stream_2(
     try:
         video_url = await decrypt_string(url)
         video_url = await gen_video_link(video_url)
-        meta = await decrypt_string(meta)
         if not video_url or not meta:
             return templates.TemplateResponse(
                 "homepage.html",
                 {"request": request, "error_msg": "Link Expired or Invalid Link"},
             )
 
-        decoded_meta = await decode_string(unquote_plus(meta))
+        decoded_meta = await decrypt_string(unquote_plus(meta))
         data = decoded_meta.split("|")
         f_name = await hide_name(data[0])
         f_size = data[1]
