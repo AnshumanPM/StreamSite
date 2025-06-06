@@ -5,7 +5,14 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from database import collection, new_collection
-from helper import decode_string, gen_video_link, hashids, hide_name, is_valid_url, decrypt_string
+from helper import (
+    decode_string,
+    decrypt_string,
+    gen_video_link,
+    hashids,
+    hide_name,
+    is_valid_url,
+)
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
