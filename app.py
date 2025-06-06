@@ -82,10 +82,13 @@ async def tg_stream(
                 "tg_file_url": tg_file_url,
             },
         )
-    except Exception:
+    except Exception as e:
         return templates.TemplateResponse(
             "homepage.html",
-            {"request": request, "error_msg": "Link Expired or Invalid Link"},
+            {
+                "request": request,
+                "error_msg": f"Link Expired or Invalid Link \n\nError {e}",
+            },
         )
 
 
@@ -182,10 +185,13 @@ async def view(request: Request, url_id: str = Path(...)):
                 "tg_file_url": tg_file_url,
             },
         )
-    except Exception:
+    except Exception as e:
         return templates.TemplateResponse(
             "homepage.html",
-            {"request": request, "error_msg": "Link Expired or Invalid Link"},
+            {
+                "request": request,
+                "error_msg": f"Link Expired or Invalid Link \n\nError {e}",
+            },
         )
 
 
@@ -223,10 +229,13 @@ async def view(request: Request, url_id: str = Path(...)):
                 "tg_file_url": tg_file_url,
             },
         )
-    except Exception:
+    except Exception as e:
         return templates.TemplateResponse(
             "homepage.html",
-            {"request": request, "error_msg": "Link Expired or Invalid Link"},
+            {
+                "request": request,
+                "error_msg": f"Link Expired or Invalid Link \n\nError {e}",
+            },
         )
 
 
