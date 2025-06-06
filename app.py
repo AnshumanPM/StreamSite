@@ -1,4 +1,4 @@
-from urllib.parse import quote_plus, unquote_plus
+from urllib.parse import quote_plus, unquote_plus, unquote
 
 from fastapi import FastAPI, Form, Path, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
@@ -126,7 +126,7 @@ async def tg_stream_2(
     meta: str = Query(..., alias="meta"),
 ):
     try:
-        video_url = await decrypt_string(url)
+        video_url = await decrypt_string(unquote(url))
         video_url = await gen_video_link(video_url)
         if not video_url or not meta:
             return templates.TemplateResponse(
@@ -134,7 +134,7 @@ async def tg_stream_2(
                 {"request": request, "error_msg": "Link Expired or Invalid Link"},
             )
 
-        decoded_meta = await decrypt_string(meta)
+        decoded_meta = await decrypt_string(unquote(meta))
         data = decoded_meta.split("|")
         f_name = await hide_name(data[0])
         f_size = data[1]
