@@ -1,7 +1,12 @@
+import base64
 import os
 
+DB_URL = os.environ.get("MONGO_URL")
 HASH_SALT = str(os.environ.get("HASH_SALT"))
-DB_URL = str(os.environ.get("MONGO_URL"))
+CRYPTO_KEY_B64 = os.environ.get("CRYPTO_KEY_B64")
+
+# Derived
+CRYPTO_KEY = base64.b64decode(CRYPTO_KEY_B64)
 
 # Optional
 # Dl Urls In case your link banned then replace with new

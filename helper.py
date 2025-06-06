@@ -1,16 +1,19 @@
+import base64
 import re
 from urllib.parse import parse_qs, urlparse, urlunparse
 
 import validators
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
 from hashids import Hashids
 from pytubefix import YouTube
 
-from config import HASH_SALT, NEW_DL_BASE_URL, OLD_DL_BASE_URL
+from config import CRYPTO_KEY, HASH_SALT, NEW_DL_BASE_URL, OLD_DL_BASE_URL
 
 hashids = Hashids(salt=HASH_SALT)
 
 
-def hide_name(name):
+async def hide_name(name):
     words = name.split()
     hidden_words = []
     for word in words:
@@ -22,16 +25,25 @@ def hide_name(name):
     return " ".join(hidden_words)
 
 
-def decode_string(encoded):
+async def decode_string(encoded):
     decoded = "".join([chr(i) for i in hashids.decode(encoded)])
     return decoded
 
 
-def is_valid_url(url):
+async def decrypt_string(encrypted):
+    data = base64.b64decode(encrypted)
+    iv_dec = data[:16]
+    ciphertext_dec = data[16:]
+    cipher_dec = AES.new(CRYPTO_KEY, AES.MODE_CBC, iv_dec)
+    decrypted = unpad(cipher_dec.decrypt(ciphertext_dec), AES.block_size)
+    return decrypted.decode()
+
+
+async def is_valid_url(url):
     return validators.url(url)
 
 
-def extract_gdrive_id(gdrive_link):
+async def extract_gdrive_id(gdrive_link):
     match = re.match(
         r"^https://drive\.google\.com/file/d/([a-zA-Z0-9_-]+)/?.*$", gdrive_link
     )
@@ -43,14 +55,14 @@ def extract_gdrive_id(gdrive_link):
     return None
 
 
-def gen_video_link(video_url):
+async def gen_video_link(video_url):
     parsed_url = urlparse(video_url)
     if parsed_url.netloc in ["youtube.com", "youtu.be"]:
-        yt = YouTube(video_url)
+        yt = YouTube(video_url, "WEB")
         video_streams = yt.streams.filter(progressive=True)
         return video_streams.get_highest_resolution().url
     elif parsed_url.netloc in ["drive.google.com"]:
-        gid = extract_gdrive_id(video_url)
+        gid = await extract_gdrive_id(video_url)
         return f"https://gdl.anshumanpm.eu.org/direct.aspx?id={gid}"
     # For Stream Bot
     elif parsed_url.netloc in OLD_DL_BASE_URL:

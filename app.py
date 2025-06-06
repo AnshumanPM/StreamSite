@@ -1,133 +1,261 @@
-import json
 from urllib.parse import quote_plus, unquote_plus
 
-from flask import Flask, Response, redirect, render_template, request
+from fastapi import FastAPI, Form, Path, Query, Request
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.templating import Jinja2Templates
 
 from database import collection, new_collection
 from helper import decode_string, gen_video_link, hashids, hide_name, is_valid_url
 
-app = Flask(__name__)
-app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
+app = FastAPI()
+templates = Jinja2Templates(directory="templates")
+templates.env.filters["quote_plus"] = lambda u: quote_plus(u)
 
 
-@app.route("/short/v4", methods=["POST"])
-def short_api_v4():
+@app.post("/short/v4")
+async def short_api_v4(
+    url_id: str = Form(...), dl_url: str = Form(...), metadata: str = Form(...)
+):
     try:
-        url_id = request.form["url_id"]
-        dl_url = request.form["dl_url"]
-        metadata = request.form["metadata"]
         new_collection.insert_one(
             {"url_id": url_id, "dl_url": dl_url, "metadata": metadata}
         )
-        short_url = f"https://stream.anshbotzone.com/view/{url_id}"
-        response_data = {
-            "status": 200,
-            "url_id": url_id,
-            "short_url": short_url,
-        }
-        json_data = json.dumps(response_data, indent=4)
-        return Response(json_data, content_type="application/json")
-    except BaseException:
-        response_data = {
-            "status": 400,
-            "url_id": 0,
-            "short_url": "https://stream.anshbotzone.com/",
-        }
-        json_data = json.dumps(response_data, indent=4)
-        return Response(json_data, content_type="application/json")
+        short_url = f"https://stream.anshbotzone.com/play/{url_id}"
+        return JSONResponse(
+            content={
+                "status": 200,
+                "url_id": url_id,
+                "short_url": short_url,
+            }
+        )
+    except Exception:
+        return JSONResponse(
+            content={
+                "status": 400,
+                "url_id": 0,
+                "short_url": "https://stream.anshbotzone.com/",
+            },
+            status_code=400,
+        )
 
 
-@app.route("/tg/stream")
-def tg_stream():
-    old_video_url = request.args.get("url")
-    metadata = request.args.get("meta")
-    video_url = gen_video_link(old_video_url)
-    if video_url != "" and metadata != "":
-        try:
-            data = decode_string(unquote_plus(metadata)).split("|")
-            f_name = hide_name(data[0])
-            f_size = data[1]
-            f_owner = hide_name(data[2])
-            f_time = data[3]
-            try:
-                tg_file_url = data[4]
-            except BaseException:
-                tg_file_url = "https://telegram.me/AnshumanFileBot"
-            return render_template(
-                "tg-stream.html",
-                video_url=video_url,
-                f_name=f_name,
-                f_size=f_size,
-                f_owner=f_owner,
-                f_time=f_time,
-                tg_file_url=tg_file_url,
+@app.get("/tg/stream", response_class=HTMLResponse)
+async def tg_stream(
+    request: Request,
+    url: str = Query(..., alias="url"),
+    meta: str = Query(..., alias="meta"),
+):
+    video_url = await gen_video_link(url)
+    if not video_url or not meta:
+        return templates.TemplateResponse(
+            "homepage.html",
+            {"request": request, "error_msg": "Link Expired or Invalid Link"},
+        )
+
+    try:
+        decoded_meta = await decode_string(unquote_plus(meta))
+        data = decoded_meta.split("|")
+        f_name = await hide_name(data[0])
+        f_size = data[1]
+        f_owner = await hide_name(data[2])
+        f_time = data[3]
+        tg_file_url = (
+            data[4] if len(data) > 4 else "https://telegram.me/AnshumanFileBot"
+        )
+
+        return templates.TemplateResponse(
+            "tg-stream.html",
+            {
+                "request": request,
+                "video_url": video_url,
+                "f_name": f_name,
+                "f_size": f_size,
+                "f_owner": f_owner,
+                "f_time": f_time,
+                "tg_file_url": tg_file_url,
+            },
+        )
+    except Exception:
+        return templates.TemplateResponse(
+            "homepage.html",
+            {"request": request, "error_msg": "Link Expired or Invalid Link"},
+        )
+
+
+@app.get("/tg/play", response_class=HTMLResponse)
+async def tg_stream_2(
+    request: Request,
+    url: str = Query(..., alias="url"),
+    meta: str = Query(..., alias="meta"),
+):
+    try:
+        video_url = await decrypt_string(url)
+        video_url = await gen_video_link(video_url)
+        meta = await decrypt_string(meta)
+        if not video_url or not meta:
+            return templates.TemplateResponse(
+                "homepage.html",
+                {"request": request, "error_msg": "Link Expired or Invalid Link"},
             )
-        except BaseException:
-            return render_template(
-                "homepage.html", error_msg="Link Expired or Invalid Link"
-            )
-    return render_template("homepage.html", error_msg="Link Expired or Invalid Link")
+
+        decoded_meta = await decode_string(unquote_plus(meta))
+        data = decoded_meta.split("|")
+        f_name = await hide_name(data[0])
+        f_size = data[1]
+        f_owner = await hide_name(data[2])
+        f_time = data[3]
+        tg_file_url = (
+            data[4] if len(data) > 4 else "https://telegram.me/AnshumanFileBot"
+        )
+
+        return templates.TemplateResponse(
+            "tg-stream.html",
+            {
+                "request": request,
+                "video_url": video_url,
+                "f_name": f_name,
+                "f_size": f_size,
+                "f_owner": f_owner,
+                "f_time": f_time,
+                "tg_file_url": tg_file_url,
+            },
+        )
+    except Exception as e:
+        return templates.TemplateResponse(
+            "homepage.html",
+            {
+                "request": request,
+                "error_msg": f"Link Expired or Invalid Link \n\nError {e}",
+            },
+        )
 
 
-# Again Added For Old Link
-@app.route("/tg/<id>")
-def tg(id):
+@app.get("/tg/{id}")
+async def tg(id: str):
     try:
         url_id = hashids.decode(id)[0]
         original_url = collection.find_one({"url_id": url_id})["long_url"]
-        return redirect(original_url)
-    except BaseException:
-        return render_template("homepage.html", error_msg="Invalid Video Link")
+        return RedirectResponse(url=original_url)
+    except Exception:
+        return templates.TemplateResponse(
+            "homepage.html", {"request": Request, "error_msg": "Invalid Video Link"}
+        )
 
 
-@app.route("/view/<url_id>")
-def view(url_id):
+@app.get("/view/{url_id}", response_class=HTMLResponse)
+async def view(request: Request, url_id: str = Path(...)):
     try:
         obj = new_collection.find_one({"url_id": url_id})
-        old_video_url = obj["dl_url"]
-        metadata = obj["metadata"]
-        video_url = gen_video_link(old_video_url)
-        data = decode_string(unquote_plus(metadata)).split("|")
-        f_name = hide_name(data[0])
+        if not obj:
+            raise ValueError("Document not found")
+
+        video_url = await gen_video_link(obj["dl_url"])
+        if not video_url:
+            raise ValueError("Invalid video URL")
+
+        decoded_meta = await decode_string(unquote_plus(obj["metadata"]))
+        data = decoded_meta.split("|")
+        f_name = await hide_name(data[0])
         f_size = data[1]
-        f_owner = hide_name(data[2])
+        f_owner = await hide_name(data[2])
         f_time = data[3]
-        tg_file_url = data[4]
-        return render_template(
+        tg_file_url = (
+            data[4] if len(data) > 4 else "https://telegram.me/AnshumanFileBot"
+        )
+
+        return templates.TemplateResponse(
             "tg-stream.html",
-            video_url=video_url,
-            f_name=f_name,
-            f_size=f_size,
-            f_owner=f_owner,
-            f_time=f_time,
-            tg_file_url=tg_file_url,
+            {
+                "request": request,
+                "video_url": video_url,
+                "f_name": f_name,
+                "f_size": f_size,
+                "f_owner": f_owner,
+                "f_time": f_time,
+                "tg_file_url": tg_file_url,
+            },
         )
-    except BaseException:
-        return render_template(
-            "homepage.html", error_msg="Link Expired or Invalid Link"
+    except Exception:
+        return templates.TemplateResponse(
+            "homepage.html",
+            {"request": request, "error_msg": "Link Expired or Invalid Link"},
         )
 
 
-@app.route("/stream")
-def stream():
-    video_url = request.args.get("url")
-    return render_template("stream.html", video_url=video_url)
+@app.get("/play/{url_id}", response_class=HTMLResponse)
+async def view(request: Request, url_id: str = Path(...)):
+    try:
+        obj = new_collection.find_one({"url_id": url_id})
+        if not obj:
+            raise ValueError("Document not found")
+
+        video_url = await decrypt_string(obj["dl_url"])
+        video_url = await gen_video_link(video_url)
+        if not video_url:
+            raise ValueError("Invalid video URL")
+
+        decoded_meta = await decrypt_string(unquote_plus(obj["metadata"]))
+        data = decoded_meta.split("|")
+        f_name = await hide_name(data[0])
+        f_size = data[1]
+        f_owner = await hide_name(data[2])
+        f_time = data[3]
+        tg_file_url = (
+            data[4] if len(data) > 4 else "https://telegram.me/AnshumanFileBot"
+        )
+
+        return templates.TemplateResponse(
+            "tg-stream.html",
+            {
+                "request": request,
+                "video_url": video_url,
+                "f_name": f_name,
+                "f_size": f_size,
+                "f_owner": f_owner,
+                "f_time": f_time,
+                "tg_file_url": tg_file_url,
+            },
+        )
+    except Exception:
+        return templates.TemplateResponse(
+            "homepage.html",
+            {"request": request, "error_msg": "Link Expired or Invalid Link"},
+        )
 
 
-@app.route("/", methods=["GET", "POST"])
-def home_page():
+@app.get("/stream", response_class=HTMLResponse)
+async def stream(request: Request, url: str = Query(...)):
+    return templates.TemplateResponse(
+        "stream.html", {"request": request, "video_url": url}
+    )
+
+
+@app.api_route("/", methods=["GET", "POST"], response_class=HTMLResponse)
+async def home_page(request: Request):
     if request.method == "POST":
-        video_url = request.form["url"]
-        if is_valid_url(video_url):
-            video_url = gen_video_link(video_url)
-            return render_template("stream.html", video_url=video_url)
-        else:
-            return render_template(
-                "homepage.html", input_value=video_url, error_msg="Invalid Video Link"
+        form_data = await request.form()
+        video_url = form_data.get("url")
+
+        if await is_valid_url(video_url):
+            processed_url = await gen_video_link(video_url)
+            return templates.TemplateResponse(
+                "stream.html", {"request": request, "video_url": processed_url}
             )
-    return render_template("homepage.html")
+        return templates.TemplateResponse(
+            "homepage.html",
+            {
+                "request": request,
+                "input_value": video_url,
+                "error_msg": "Invalid Video Link",
+            },
+        )
+
+    # GET request
+    return templates.TemplateResponse("homepage.html", {"request": request})
 
 
-@app.errorhandler(Exception)
-def page_not_found(e):
-    return render_template("homepage.html", error_msg=str(e))
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    return templates.TemplateResponse(
+        "homepage.html", {"request": request, "error_msg": str(exc)}, status_code=500
+    )

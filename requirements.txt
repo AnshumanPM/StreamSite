@@ -1,8 +1,11 @@
-Flask
-gunicorn
+fastapi
 hashids
+httpx
+jinja2
+pycryptodome
 pymongo
-requests
-validators
+python-multipart
 pytubefix
+uvicorn
+validators
 Werkzeug
