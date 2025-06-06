@@ -134,7 +134,7 @@ async def tg_stream_2(
                 {"request": request, "error_msg": "Link Expired or Invalid Link"},
             )
 
-        decoded_meta = await decrypt_string(unquote_plus(meta))
+        decoded_meta = await decrypt_string(meta)
         data = decoded_meta.split("|")
         f_name = await hide_name(data[0])
         f_size = data[1]
@@ -233,7 +233,7 @@ async def view(request: Request, url_id: str = Path(...)):
         if not video_url:
             raise ValueError("Invalid video URL")
 
-        decoded_meta = await decrypt_string(unquote_plus(obj["metadata"]))
+        decoded_meta = await decrypt_string(obj["metadata"])
         data = decoded_meta.split("|")
         f_name = await hide_name(data[0])
         f_size = data[1]
