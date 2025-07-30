@@ -66,6 +66,7 @@
                   <li id="jplayButton" class="dropdown-item">JPlayer</li>
                   <li id="kmplayButton" class="dropdown-item">KMPlayer</li>
                   <li id="hdplayButton" class="dropdown-item">HDPlayer</li>
+                  <li id="nplayerButton" class="dropdown-item">nPlayer</li>
                 </ul>
               </details>
             </div>
@@ -152,6 +153,9 @@
       };
       document.getElementById("hdplayButton").onclick = function() {
         window.location.href = `intent:${videoUrl}#Intent;package=uplayer.video.player;end`;
+      };
+      document.getElementById("nplayerButton").onclick = function() {
+        window.location.href = `nplayer-${videoUrl}`;
       };
       // Hide Context Menu
       document.addEventListener('contextmenu', function(e) {
