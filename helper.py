@@ -66,7 +66,6 @@ async def gen_video_link(video_url):
         return f"https://gdl.anshumanpm.eu.org/direct.aspx?id={gid}"
     # For Stream Bot
     elif parsed_url.netloc in OLD_DL_BASE_URL:
-        return video_url
         return urlunparse(
             (
                 parsed_url.scheme,
