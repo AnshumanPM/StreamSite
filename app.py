@@ -34,19 +34,25 @@ async def api_play_by_id(request: Request):
         video_url = await decrypt_string(obj["dl_url"])
         video_url = await gen_video_link(video_url)
         if not video_url:
-            return JSONResponse({"error": "Invalid or expired video URL"}, status_code=410)
+            return JSONResponse(
+                {"error": "Invalid or expired video URL"}, status_code=410
+            )
 
         decoded_meta = await decrypt_string(obj["metadata"])
         data = decoded_meta.split("|")
 
-        return JSONResponse({
-            "video_url": video_url,
-            "f_name": await hide_name(data[0]),
-            "f_size": data[1],
-            "f_owner": await hide_name(data[2]),
-            "f_time": data[3],
-            "tg_file_url": data[4] if len(data) > 4 else "https://telegram.me/AnshumanFileBot",
-        })
+        return JSONResponse(
+            {
+                "video_url": video_url,
+                "f_name": await hide_name(data[0]),
+                "f_size": data[1],
+                "f_owner": await hide_name(data[2]),
+                "f_time": data[3],
+                "tg_file_url": (
+                    data[4] if len(data) > 4 else "https://telegram.me/AnshumanFileBot"
+                ),
+            }
+        )
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
 
@@ -63,19 +69,25 @@ async def api_play_by_meta(request: Request):
         video_url = await decrypt_string(unquote(url))
         video_url = await gen_video_link(video_url)
         if not video_url:
-            return JSONResponse({"error": "Invalid or expired video URL"}, status_code=410)
+            return JSONResponse(
+                {"error": "Invalid or expired video URL"}, status_code=410
+            )
 
         decoded_meta = await decrypt_string(unquote(meta))
         data = decoded_meta.split("|")
 
-        return JSONResponse({
-            "video_url": video_url,
-            "f_name": await hide_name(data[0]),
-            "f_size": data[1],
-            "f_owner": await hide_name(data[2]),
-            "f_time": data[3],
-            "tg_file_url": data[4] if len(data) > 4 else "https://telegram.me/AnshumanFileBot",
-        })
+        return JSONResponse(
+            {
+                "video_url": video_url,
+                "f_name": await hide_name(data[0]),
+                "f_size": data[1],
+                "f_owner": await hide_name(data[2]),
+                "f_time": data[3],
+                "tg_file_url": (
+                    data[4] if len(data) > 4 else "https://telegram.me/AnshumanFileBot"
+                ),
+            }
+        )
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
 
