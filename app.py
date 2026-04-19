@@ -1,6 +1,7 @@
 from urllib.parse import quote_plus, unquote, unquote_plus
 
 from fastapi import FastAPI, Form, Path, Query, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
@@ -15,6 +16,13 @@ from helper import (
 )
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 templates = Jinja2Templates(directory="templates")
 templates.env.filters["quote_plus"] = lambda u: quote_plus(u)
 
